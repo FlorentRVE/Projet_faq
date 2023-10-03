@@ -3,9 +3,10 @@
 
 <head>
     <title>FAQ numéro client</title>
-  {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-  {% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    <script src="{{ asset('/js/script.js') }}"></script>
 </head>
 
 <body>
@@ -24,9 +25,10 @@
     <div class="flex w-[96%] mx-auto gap-6 mt-10">
 
         <div class="bg-blue-900 flex-col justify-center p-5 h-4/5 w-1/5 rounded-2xl shadow-lg">
-            <h2 class="bg-orange-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer">CITY KER</h2>
-            <h2 class="bg-yellow-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer">Velo</h2>
-            <h2 class="bg-green-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer">Vert</h2>
+            <h2 class="reset bg-red-800 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer">Tous</h2>
+            <h2 class="category bg-orange-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="city_ker">CITY KER</h2>
+            <h2 class="category bg-yellow-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="velo">Velo</h2>
+            <h2 class="category bg-green-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="vert">Vert</h2>
 
         </div>
 
@@ -36,12 +38,13 @@
 
                 {% for item in data %}
 
-                        <div class="bg-green-100 mb-4 ml-4 rounded-xl shadow-lg text-lg">
+                        <div class="objet bg-green-100 mb-4 ml-4 rounded-xl shadow-lg text-lg" data-categorie={{item.Categorie}}>
 
-                            <h2 data-categorie={{item.Categorie}} class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h2>
+                            <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h3>
                             <p class="p-2">{{item.Reponse}}</p>
 
                         </div>
+                        
                 {% endfor %}
 
             {% else %}

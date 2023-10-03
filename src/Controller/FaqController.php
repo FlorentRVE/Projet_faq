@@ -70,8 +70,8 @@ class FaqController extends AbstractController
 
         ];
 
-        $searchTerm = $request->query->get('search');
-        $data = [];
+        $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
+        $data = []; // donnée à afficher
         
         foreach($faqList as $item) {
             
