@@ -18,10 +18,10 @@ class Demande
     private ?string $Question = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Réponse = null;
+    private ?string $Reponse = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Catégorie = null;
+    private ?string $Categorie = null;
 
     public function getId(): ?int
     {
@@ -40,26 +40,26 @@ class Demande
         return $this;
     }
 
-    public function getRéponse(): ?string
+    public function getReponse(): ?string
     {
-        return $this->Réponse;
+        return $this->Reponse;
     }
 
-    public function setRéponse(string $Réponse): static
+    public function setReponse(string $Reponse): static
     {
-        $this->Réponse = $Réponse;
+        $this->Reponse = $Reponse;
 
         return $this;
     }
 
-    public function getCatégorie(): ?string
+    public function getCategorie(): ?string
     {
-        return $this->Catégorie;
+        return $this->Categorie;
     }
 
-    public function setCatégorie(string $Catégorie): static
+    public function setCategorie(string $Categorie): static
     {
-        $this->Catégorie = $Catégorie;
+        $this->Categorie = $Categorie;
 
         return $this;
     }
