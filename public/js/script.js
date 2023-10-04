@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    buttonReset.addEventListener('click', () => { // Set category_choice à null pour re afficher tous les objets
-        category_choice = null;
+    buttonReset.addEventListener('click', () => { // Reload la page pour re afficher tous les objets
+        window.location.reload();
     });
 
 });

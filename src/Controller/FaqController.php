@@ -2,86 +2,52 @@
 
 namespace App\Controller;
 
+use App\Entity\Demande;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\DemandeRepository;
 
 class FaqController extends AbstractController
 {
-    #[Route('/faq', name: 'app_faq')]
-    public function index(Request $request): Response
+
+    #[Route('/createdemande', name: 'create_demande')]
+    public function createDemande(EntityManagerInterface $entityManager): Response
     {
-        $faqList = [
+        $demande = new Demande();
+        $demande->setQuestion('Qu"elles sont les horaires de City Ker ?');
+        $demande->setRéponse('Les horaires sont de 9h30 à 18h30');
+        $demande->setCatégorie('city_ker');
 
-            $id_1 = [
-                'catégorie' => 'city_ker',
-                'question' => 'question_city_ker_1tttttttttttttttttttt',
-                'reponse' => 'reponse_city_ker_1'
-            ],
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($demande);
 
-            $id_2 = [
-                'catégorie' => 'velo',
-                'question' => 'question_velo_1',
-                'reponse' => 'reponse_vélo_1 bla leefegrhri gtrgtg tgtgt gtghtug tgtgt gt gtgtgtrgotguierhg e gegegerger gergoerughre g lorem ipsum frghire fefejifgegeziuyfgfgzyef fheufe fhegf efgeulfhefefef'
-            ],
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
 
-            $id_3 = [
-                'catégorie' => 'vert',
-                'question' => 'question_vert_1',
-                'reponse' => 'reponse_vert_1'
-            ],
+        return new Response('Nouvelle demande créee '.$demande->getId());
+    }
 
-            $id_4 = [
-                'catégorie' => 'city_ker',
-                'question' => 'question_city_ker_2tttttttttttttttttttt',
-                'reponse' => 'reponse_city_ker_2'
-            ],
 
-            $id_5 = [
-                'catégorie' => 'velo',
-                'question' => 'question_velo_2',
-                'reponse' => 'reponse_vélo_2'
-            ],
-
-            $id_6 = [
-                'catégorie' => 'vert',
-                'question' => 'question_vert_2',
-                'reponse' => 'reponse_vert_2'
-            ],
-
-            $id_7 = [
-                'catégorie' => 'city_ker',
-                'question' => 'question_city_ker_3tttttttttttttttttttt',
-                'reponse' => 'reponse_city_ker_3'
-            ],
-
-            $id_8 = [
-                'catégorie' => 'velo',
-                'question' => 'question_velo_3',
-                'reponse' => 'reponse_vélo_3'
-            ],
-
-            $id_9 = [
-                'catégorie' => 'vert',
-                'question' => 'question_vert_3',
-                'reponse' => 'reponse_vert_3'
-            ]
-
-        ];
+    #[Route('/faq', name: 'app_faq')]
+    public function getDemandes(DemandeRepository $demandeRepository, Request $request): Response
+    {
+        $demande = $demandeRepository->findAll(); // Récupération des données de la base
 
         $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
-        $data = []; // donnée à afficher
+        $data = []; // Donnée à afficher
         
-        foreach($faqList as $item) {
+        foreach($demande as $item) {
             
             // Si le terme de recherche est vide ou si la question ou réponse contient le terme de recherche
             // on ajoute l'objet à la liste à afficher
-            if (empty($searchTerm) || stripos($item['question'], $searchTerm) !== false || stripos($item['reponse'], $searchTerm) !== false) {
+            if (empty($searchTerm) || stripos($item->getQuestion(), $searchTerm) !== false || stripos($item->getRéponse(), $searchTerm) !== false) {
                 $data[] = [
-                    'Categorie' => $item['catégorie'],
-                    'Question' => $item['question'],
-                    'Reponse' => $item['reponse'],
+                    'Categorie' => $item->getCatégorie(),
+                    'Question' => $item->getQuestion(),
+                    'Reponse' => $item->getRéponse(),
                 ];
             }
             
