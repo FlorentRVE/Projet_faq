@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les catégories
 
     buttons.forEach(button => {
-        button.addEventListener('click', (e) => { // Pour chaque bouton, au click ...
+        button.addEventListener('click', (e) => { // Pour chaque bouton (City ker, vert, velo), au click ...
             
             category_choice = e.target.dataset.categorie; // ... on récupère l'attribut data-categorie et on le stocke dans category_choice
 
@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    buttonReset.addEventListener('click', () => { // Reload de la page pour re afficher tous les objets
-        window.location.reload();
+    buttonReset.addEventListener('click', () => { // Set category_choice à null pour re afficher tous les objets
+        category_choice = null;
     });
 
 });
