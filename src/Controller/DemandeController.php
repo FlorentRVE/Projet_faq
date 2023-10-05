@@ -15,10 +15,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class DemandeController extends AbstractController
 {
     #[Route('/', name: 'app_demande_index', methods: ['GET'])]
-    public function index(DemandeRepository $demandeRepository): Response
+    public function index(DemandeRepository $demandeRepository, Request $request): Response
     {
+        $demande = $demandeRepository->findAll(); // Récupération des données de la base
+
+        $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
+        $data = []; // Donnée à afficher
+        
+        foreach($demande as $item) {
+            
+            // Si le terme de recherche est vide OU si la question/réponse contient le terme de recherche
+            // on ajoute l'objet à la liste à afficher
+            if (empty($searchTerm) || stripos($item->getQuestion(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
+                $data[] = [
+                    'id' => $item->getId(),
+                    'Categorie' => $item->getCategorie(),
+                    'Question' => $item->getQuestion(),
+                    'Reponse' => $item->getReponse(),
+                ];
+            }
+            
+            
+        }
+
         return $this->render('demande/index.html.twig', [
-            'demandes' => $demandeRepository->findAll(),
+            'demandes' => $data,
+            'searchTerm' => $searchTerm,
         ]);
     }
 

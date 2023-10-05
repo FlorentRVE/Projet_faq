@@ -13,24 +13,6 @@ use App\Repository\DemandeRepository;
 class FaqController extends AbstractController
 {
 
-    // #[Route('/createdemande', name: 'create_demande')]
-    // public function createDemande(EntityManagerInterface $entityManager): Response
-    // {
-    //     $demande = new Demande();
-    //     $demande->setQuestion('Qu"elles sont les horaires de City Ker ?');
-    //     $demande->setReponse('Les horaires sont de 9h30 à 18h30');
-    //     $demande->setCategorie('city_ker');
-
-    //     // tell Doctrine you want to (eventually) save the Product (no queries yet)
-    //     $entityManager->persist($demande);
-
-    //     // actually executes the queries (i.e. the INSERT query)
-    //     $entityManager->flush();
-
-    //     return new Response('Nouvelle demande créee '.$demande->getId());
-    // }
-
-
     #[Route('/faq', name: 'app_faq')]
     public function getDemandes(DemandeRepository $demandeRepository, Request $request): Response
     {

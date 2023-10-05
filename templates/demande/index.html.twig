@@ -5,29 +5,51 @@
 {% block body %}
 <content>
 
-    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 mb-4 py-4">Panneau d'administration FAQ</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Panneau d'administration FAQ</h1>
 
-    <div class="flex justify-center my-5">
+        {# ========== Barre de recherche =========#}
+    <form action="#" method="get" class="p-4 shadow-lg text-slate-100 text-lg text-center bg-blue-900">
+        <label for="search">Rechercher une question : </label>
+        <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2">
+        <button type="submit" class="bg-green-500 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
+    </form>
+
+    <div class="flex items-center my-5 justify-around">
     
-        <a href="{{ path('app_demande_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-2 hover:brightness-125 shadow-lg font-semibold">Nouvelle question</a>
+        {# ========== Boutons de tri par catégorie =========#}
+        <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg">
+            <p value="all" class="reset bg-slate-300 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold cursor-pointer">Tous</p>
+            <p value="city_ker" data-categorie="city_ker" class="categoryAdmin bg-orange-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold cursor-pointer">CITY KER</p>
+            <p value="velo" data-categorie="velo" class="categoryAdmin bg-yellow-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold cursor-pointer">Velo</p>
+            <p value="vert" data-categorie="vert" class="categoryAdmin bg-green-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold cursor-pointer">Vert</p>
+        </div>
+
+        {# ========== Bouton renvoyant au formulaire de création de question =========#}
+        <a href="{{ path('app_demande_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Nouvelle question</a>
     </div>
 
-    <table class="table mx-auto shadow-lg">
+
+
+    {# ========== Affichage des questions/réponses sous forme de tableau =========#}
+    <table class="table mx-auto shadow-xl text-lg w-11/12">
+
         <thead>
-            <tr class="bg-blue-900 text-slate-100">
+            <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900">
                 <th class="p-2">Catégorie</th>
                 <th class="p-2">Question</th>
                 <th class="p-2">Réponse</th>
                 <th class="p-2">Actions</th>
             </tr>
         </thead>
+
         <tbody class="bg-yellow-100 text-slate-900">
+
         {% for demande in demandes %}
-            <tr>
-                <td class="p-2 bg-yellow-100 text-slate-800 font-semibold text-center uppercase">{{ demande.Categorie }}</td>
+            <tr class="border-2 border-slate-900 objet" data-categorie={{ demande.Categorie }}>
+                <td class="p-2 bg-yellow-100 text-slate-800 text-center uppercase font-extrabold">{{ demande.Categorie }}</td>
                 <td class="p-2 bg-blue-900 text-slate-100 font-semibold">{{ demande.Question }}</td>
                 <td class="bg-green-100 pl-1">{{ demande.Reponse }}</td>
-                <td class="bg-blue-900 p-2">
+                <td class="bg-blue-900 p-2 flex justify-center items-center gap-2">
                     <a href="{{ path('app_demande_show', {'id': demande.id}) }}" class="bg-green-400  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Voir</a>
                     <a href="{{ path('app_demande_edit', {'id': demande.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
                 </td>
