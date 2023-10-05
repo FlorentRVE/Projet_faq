@@ -6,7 +6,8 @@
 ![TAILWINDCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 
-Projet d'application web avec Symfony permettant d'accéder à une base de données de questions/réponses courante avec un panneau d'administration pour le CRUD.
+Projet d'application web avec Symfony permettant d'accéder à une base de données de questions/réponses courante.
+L'utilisateur disposera d'identifiant et d'un accès à un panneau d'administration pour le CRUD.
 
 ## Sommaire
 
