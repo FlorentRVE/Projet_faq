@@ -7,11 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\DemandeRepository;
 
 class FaqController extends AbstractController
 {
+
+    // =============== Controller de la partie utilisateur-only de la FAQ =========================
+
+    // Seulement affichage et recherche des questions/réponses depuis la BDD
 
     #[Route('/faq', name: 'app_faq')]
     public function getDemandes(DemandeRepository $demandeRepository, Request $request): Response

@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Demande{% endblock %}
+{% block title %}Modifier une demande{% endblock %}
 
 {% block body %}
-    <h1>Edit Demande</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Modifier une demande</h1>
 
-    {{ include('demande/_form.html.twig', {'button_label': 'Update'}) }}
+    {# ======== Formulaire de modification ========= #}
+    {{ include('demande/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_demande_index') }}">back to list</a>
+    
+    {# ========= Boutons d'actions ======== #}
+    <div class="flex justify-between w-4/5 mx-auto">
+        <a href="{{ path('app_demande_index') }}" class="bg-orange-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
 
-    {{ include('demande/_delete_form.html.twig') }}
+        {{ include('demande/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

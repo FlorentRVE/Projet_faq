@@ -14,6 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/demande')]
 class DemandeController extends AbstractController
 {
+
+    // ======================== Controller de la partie administrateur de la FAQ =========================
+
+    // CRUD généré automatiquement à partir de l'entité Demande par "make:crud Demande"
+    // Les templates TWIG correspondants on été generés automatiquement et personnalisé par la suite 
+
+
+    // ============== Panneau d'administration avec affichage de toutes les demandes ==========================
     #[Route('/', name: 'app_demande_index', methods: ['GET'])]
     public function index(DemandeRepository $demandeRepository, Request $request): Response
     {
@@ -44,6 +52,7 @@ class DemandeController extends AbstractController
         ]);
     }
 
+    // =============== Création d'une nouvelle demande =========================
     #[Route('/new', name: 'app_demande_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -64,6 +73,7 @@ class DemandeController extends AbstractController
         ]);
     }
 
+    // =============== Affichage d'une demande selon ID =========================
     #[Route('/{id}', name: 'app_demande_show', methods: ['GET'])]
     public function show(Demande $demande): Response
     {
@@ -72,6 +82,7 @@ class DemandeController extends AbstractController
         ]);
     }
 
+    // =============== Modification d'une demande selon ID =========================
     #[Route('/{id}/edit', name: 'app_demande_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Demande $demande, EntityManagerInterface $entityManager): Response
     {
@@ -90,6 +101,7 @@ class DemandeController extends AbstractController
         ]);
     }
 
+    // =============== Suppression d'une demande selon ID =========================
     #[Route('/{id}', name: 'app_demande_delete', methods: ['POST'])]
     public function delete(Request $request, Demande $demande, EntityManagerInterface $entityManager): Response
     {
