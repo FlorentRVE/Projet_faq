@@ -6,7 +6,7 @@
 ![TAILWINDCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 
-Projet d'application web permettant d'accéder à une base de données de question/réponse courante.
+Projet d'application web avec Symfony permettant d'accéder à une base de données de questions/réponses courante avec un panneau d'administration pour le CRUD.
 
 ## Sommaire
 
@@ -49,6 +49,5 @@ A venir ...
 - [Doctrine](https://symfony.com/doc/current/doctrine.html)
 - [MySQL](https://www.mysql.com/)
 - [Adminer](https://www.adminer.org/)
-- [MaterialUI](https://mui.com/)
 - [FontAwesome](https://fontawesome.com/)
 - [Twig](https://twig.symfony.com/)
