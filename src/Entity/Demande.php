@@ -23,6 +23,9 @@ class Demande
     #[ORM\Column(length: 255)]
     private ?string $Categorie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $SousCategorie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Demande
     public function setCategorie(string $Categorie): static
     {
         $this->Categorie = $Categorie;
+
+        return $this;
+    }
+
+    public function getSousCategorie(): ?string
+    {
+        return $this->SousCategorie;
+    }
+
+    public function setSousCategorie(string $SousCategorie): static
+    {
+        $this->SousCategorie = $SousCategorie;
 
         return $this;
     }

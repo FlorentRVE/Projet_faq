@@ -31,6 +31,7 @@ class FaqController extends AbstractController
             if (empty($searchTerm) || stripos($item->getQuestion(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
                 $data[] = [
                     'Categorie' => $item->getCategorie(),
+                    'SousCategorie' => $item->getSousCategorie(),
                     'Question' => $item->getQuestion(),
                     'Reponse' => $item->getReponse(),
                 ];

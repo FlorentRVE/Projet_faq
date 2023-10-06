@@ -38,6 +38,7 @@ class DemandeController extends AbstractController
                 $data[] = [
                     'id' => $item->getId(),
                     'Categorie' => $item->getCategorie(),
+                    'SousCategorie' => $item->getSousCategorie(),
                     'Question' => $item->getQuestion(),
                     'Reponse' => $item->getReponse(),
                 ];

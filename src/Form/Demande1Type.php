@@ -23,6 +23,14 @@ class Demande1Type extends AbstractType
                 ],
                 'data' => $builder->getData()->getCategorie(),
             ])
+            ->add('SousCategorie', ChoiceType::class, [
+                'choices' => [
+                    'INFORMATIONS GENERALES SUR LE SERVICE ' => 'infos_generales',
+                    "GESTION DES RECLAMATIONS ET DEMANDES D'INFORMATIONS" => 'reclamations_informations',
+                    'SOUS CATEGORIE TEST' => 'sous_categorie_test',
+                ],
+                'data' => $builder->getData()->getSousCategorie(),
+            ])
         ;
     }
 

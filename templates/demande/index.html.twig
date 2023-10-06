@@ -39,6 +39,7 @@
 
                 <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
                     <th class="p-2">Catégorie</th>
+                    <th class="p-2">Sous-catégorie</th>
                     <th class="p-2">Question</th>
                     <th class="p-2">Réponse</th>
                     <th class="p-2">Actions</th>
@@ -52,6 +53,7 @@
                 <tr class="border-2 border-slate-900 objet" data-categorie={{ demande.Categorie }}>
 
                     <td class="p-2 text-slate-800 text-center uppercase font-extrabold {{ demande.Categorie is same as 'city_ker' ? 'bg-orange-400' : demande.Categorie is same as 'velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ demande.Categorie }}</td>
+                    <td class="p-2 bg-emerald-500 text-slate-100 font-semibold">{{ demande.SousCategorie }}</td>
                     <td class="p-2 bg-blue-900 text-slate-100 font-semibold">{{ demande.Question }}</td>
                     <td class="bg-green-100 pl-1">{{ demande.Reponse }}</td>
                     <td class="bg-blue-900 p-2 text-center">
