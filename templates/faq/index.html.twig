@@ -24,33 +24,92 @@
 
     </header>
 
-    <content class="flex w-[96%] mx-auto gap-6 mt-10">
+    <content class="flex flex-col w-[96%] mx-auto gap-8 mt-10">
 
-        {# ========== Bouttons de tri par catégorie =========#}
-        <div class="bg-blue-900 flex-col justify-center p-5 h-4/5 w-1/5 rounded-2xl shadow-lg">
-            <p class="text-slate-100 font-bold text-2xl mb-5">Trier par catégorie</p>
-            <h2 class="reset bg-slate-300 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer">Tous</h2>
-            <h2 class="category bg-orange-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="city_ker">CITY KER</h2>
-            <h2 class="category bg-yellow-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="velo">Velo</h2>
-            <h2 class="category bg-green-400 mb-5 px-2 py-4 rounded-xl text-2xl font-bold uppercase text-blue-900 hover:scale-110 hover:brightness-110 hover:cursor-pointer" data-categorie="vert">Vert</h2>
+        {# ========== Boutons de tri par catégorie =========#}
+        <div class="flex justify-evenly bg-blue-900 p-3 rounded-2xl shadow-xl uppercase mx-auto w-2/5">
 
+            <p value="all" class="reset bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+            <p value="city_ker" data-categorie="city_ker" class="categoryAdmin bg-orange-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">CITY KER</p>
+            <p value="velo" data-categorie="velo" class="categoryAdmin bg-yellow-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Velo</p>
+            <p value="vert" data-categorie="vert" class="categoryAdmin bg-green-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Vert</p>
         </div>
 
         {# ========== Affichage des questions =========#}
-        <div class="w-4/5">
+        <div class="flex gap-4 mx-auto w-11/12">
 
             {% if data is not empty %}
 
-                {% for item in data %}
+                <div class="flex flex-col shadow-lg w-1/3 rounded-xl">
 
-                        <div class="objet bg-green-100 mb-4 ml-4 rounded-xl shadow-lg text-lg" data-categorie={{item.Categorie}}>
+                    <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Infos générales</h2>
 
-                            <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h3>
-                            <p class="p-2">{{item.Reponse}}</p>
+                    <div class=" bg-green-300 flex flex-col p-3 gap-4" data-souscategorie='infos_generales'>
 
-                        </div>
-                        
-                {% endfor %}
+                        {% for item in data %}
+
+                            {% if item.SousCategorie is same as 'infos_generales' %}
+
+                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg" data-categorie={{item.Categorie}}>
+
+                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h3>
+                                        <p class="p-2">{{item.Reponse}}</p>
+
+                                    </div>
+                            {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col shadow-lg w-1/3 rounded-xl">
+
+                    <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Sous categorie test</h2>
+
+                    <div class=" bg-yellow-300 flex flex-col p-3 gap-4" data-souscategorie='sous_categorie_test'>
+
+                        {% for item in data %}
+
+                            {% if item.SousCategorie is same as 'sous_categorie_test' %}
+
+                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg" data-categorie={{item.Categorie}}>
+
+                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h3>
+                                        <p class="p-2">{{item.Reponse}}</p>
+
+                                    </div>
+                            {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col shadow-lg w-1/3 rounded-xl">
+
+                    <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Réclamations informations</h2>
+
+                    <div class=" bg-red-300 flex flex-col p-3 gap-4" data-souscategorie='reclamations_informations'>
+
+                        {% for item in data %}
+
+                            {% if item.SousCategorie is same as 'reclamations_informations' %}
+
+                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg" data-categorie={{item.Categorie}}>
+
+                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{item.Question}}</h3>
+                                        <p class="p-2">{{item.Reponse}}</p>
+
+                                    </div>
+                            {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+
 
             {% else %}
 
