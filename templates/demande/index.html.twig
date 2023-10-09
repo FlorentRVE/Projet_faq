@@ -4,6 +4,8 @@
 
 {% block body %}
 
+{# ========== Page principale Panneau d'administration =========#}
+
     <header>
         <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Panneau d'administration FAQ</h1>
 
@@ -21,9 +23,9 @@
             {# ========== Boutons de tri par catégorie =========#}
             <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
                 <p value="all" class="reset bg-slate-300 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
-                <p value="city_ker" data-categorie="city_ker" class="categoryAdmin bg-orange-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">CITY KER</p>
-                <p value="velo" data-categorie="velo" class="categoryAdmin bg-yellow-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Velo</p>
-                <p value="vert" data-categorie="vert" class="categoryAdmin bg-green-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Vert</p>
+                <p value="city_ker" data-categorie="city_ker" class="category bg-orange-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">CITY KER</p>
+                <p value="velo" data-categorie="velo" class="category bg-yellow-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Velo</p>
+                <p value="vert" data-categorie="vert" class="category bg-green-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Vert</p>
             </div>
 
             {# ========== Bouton renvoyant au formulaire de création de question =========#}
