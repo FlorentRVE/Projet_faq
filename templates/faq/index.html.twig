@@ -66,7 +66,7 @@
                                 {% if dataItem.SousCategorie is same as 'infos_generales' %}
                                     <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <p class="p-2">{{ dataItem.Reponse }}</p>
+                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -94,7 +94,7 @@
                                 {% if dataItem.SousCategorie is same as 'reclamations_informations' %}
                                     <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <p class="p-2">{{ dataItem.Reponse }}</p>
+                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -122,7 +122,7 @@
                                 {% if dataItem.SousCategorie is same as 'sous_categorie_test' %}
                                     <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <p class="p-2">{{ dataItem.Reponse }}</p>
+                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -142,5 +142,9 @@
             {% endif %}
         </div>
     </content>
+
+    <footer class="flex justify-center bg-blue-900 p-3 text-slate-100 mt-28">
+        <p>Copyright © 2023 - Tous droits réservés</p>
+    </footer>
 </body>
 </html>
