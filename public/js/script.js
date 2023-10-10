@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let buttons = document.querySelectorAll('.category'); // Récupère tous les boutons de sélection de catégorie
     let questions = document.querySelectorAll('.objet'); // Récupère toutes les blocs questions/réponses
+    let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
 
     let infoGen = document.querySelector('.infoGen'); // Récupère le conteneur pour la sous-catégorie infoGen
     let reclam = document.querySelector('.reclam'); // Récupère le conteneur pour la sous-catégorie reclam
@@ -16,11 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
     // ================================== Fonctions ====================================
 
-    // =================== Fonctions permettant d'afficher les sous-catégories si il y a au moins un objet de visible =====================
+    // =================== Fonctions permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible =====================
     function toggleContainer(container) {
-        let childObjects = container.querySelectorAll('.objet'); // Récupère tous les blocs questions/réponses avec la classe objet correspondant à la sous-catégorie
+        let childObjects = container.querySelectorAll('.objet'); // Récupère tous les blocs questions/réponses avec la classe objet et correspondant à la sous-catégorie
         let allHidden = true; // Variable 'Tout caché'
       
         childObjects.forEach(div => { // Pour chaque bloc ...
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
       
-        container.style.display = allHidden ? 'none' : ''; // si tous les blocs sont cachés, on masque le conteneur, sinon on l'affiche
+        container.style.display = allHidden ? 'none' : ''; // si la variable 'Tout caché' est True, on masque le conteneur, sinon on l'affiche
       }
 
     
@@ -53,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
 
 
+            // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
             toggleContainer(infoGen);
             toggleContainer(reclam);
             toggleContainer(test);
@@ -66,6 +69,18 @@ document.addEventListener('DOMContentLoaded', function() {
     buttonReset.addEventListener('click', () => { // Reload la page pour re afficher tous les objets
         window.location.reload();
     });
+
+    //========================= Gestion du collapse =======================
+
+    toggleBtn.forEach(btn => {
+
+        btn.addEventListener('click', (e) => {
+
+            e.target.nextElementSibling.classList.toggle('show'); // Ajoute ou retire la class show au conteneur de la réponse
+
+        });
+    })
+
 
 });
 

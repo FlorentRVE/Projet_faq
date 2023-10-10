@@ -57,16 +57,16 @@
                 {% endfor %}
 
                 {% if displayInfoGenerales %}
-                    <div class="infoGen flex flex-col shadow-lg w-full rounded-xl bg-green-300 w-">
+                    <div class="infoGen flex flex-col shadow-lg w-full rounded-xl bg-green-300">
 
                         <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Infos générales</h2>
                         <div class="flex flex-col p-3" data-souscategorie="infos_generales">
 
                             {% for dataItem in data %}
                                 {% if dataItem.SousCategorie is same as 'infos_generales' %}
-                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
+                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
+                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -92,9 +92,9 @@
 
                             {% for dataItem in data %}
                                 {% if dataItem.SousCategorie is same as 'reclamations_informations' %}
-                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
+                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
+                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
@@ -120,9 +120,9 @@
 
                             {% for dataItem in data %}
                                 {% if dataItem.SousCategorie is same as 'sous_categorie_test' %}
-                                    <div class="objet bg-green-100 rounded-xl shadow-lg text-lg mb-3" data-categorie="{{ dataItem.Categorie }}">
+                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
                                         <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-2">{{ dataItem.Reponse | raw }}</div>
+                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
