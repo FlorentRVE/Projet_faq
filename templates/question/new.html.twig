@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle question{% endblock %}
+
+{% block body %}
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Créer une nouvelle question</h1>
+
+    {# ======== Formulaire de création ========= #}
+    {{ include('question/_form.html.twig') }}
+
+    {# ========= Boutons d'actions ======== #}
+    <div class="flex justify-between w-4/5 mx-auto">
+        <a href="{{ path('app_question_index') }}"  class="bg-orange-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+    </div>
+{% endblock %}

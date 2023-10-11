@@ -2,26 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Demande;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DemandeType extends AbstractType
+class CategorieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Question')
-            ->add('Réponse')
-            ->add('Catégorie')
+            ->add('label')
+            ->add('departement')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Demande::class,
+            'data_class' => Categorie::class,
         ]);
     }
 }

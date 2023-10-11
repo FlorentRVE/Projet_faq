@@ -8,10 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let buttons = document.querySelectorAll('.category'); // Récupère tous les boutons de sélection de catégorie
     let questions = document.querySelectorAll('.objet'); // Récupère toutes les blocs questions/réponses
     let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
-
-    let infoGen = document.querySelector('.infoGen'); // Récupère le conteneur pour la sous-catégorie infoGen
-    let reclam = document.querySelector('.reclam'); // Récupère le conteneur pour la sous-catégorie reclam
-    let test = document.querySelector('.test'); // Récupère le conteneur pour la sous-catégorie test
+    let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de sous-catégories
 
     let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les catégories
 
@@ -42,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.forEach(button => {
         button.addEventListener('click', (e) => { // Pour chaque bouton (City ker, vert, velo), au click ...
 
-            category_choice = e.target.dataset.categorie; // ... on récupère l'attribut data-categorie du bouton et on le stocke dans category_choice
+            category_choice = e.target.dataset.departement; // ... on récupère l'attribut data-categorie du bouton et on le stocke dans category_choice
 
             questions.forEach(item => { // ensuite pour chaque bloc question/réponse ...                
                 
-                if(item.dataset.categorie !== category_choice) { // ... on vérifie si l'attribut data-categorie du bloc est different de category_choice
+                if(item.dataset.departement !== category_choice) { // ... on vérifie si l'attribut data-categorie du bloc est different de category_choice
                     item.style.display = 'none'; // si c'est le cas, on le masque
                 } else {
                     item.style.display = ''; // sinon on le montre
@@ -55,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
 
 
-            // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
-            toggleContainer(infoGen);
-            toggleContainer(reclam);
-            toggleContainer(test);
+            // // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
+            containers.forEach(container => {
+                toggleContainer(container);
+            });
 
                         
         });

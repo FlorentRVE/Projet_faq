@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question index{% endblock %}
+
+{% block body %}
+    {# ========== Page principale Panneau d'administration =========#}
+
+    <header>
+        <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Panneau d'administration FAQ</h1>
+
+        {# ========== Barre de recherche =========#}
+        <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
+            <label for="search" class="text-slate-100">Rechercher une question </label>
+            <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
+            <button type="submit" class="bg-green-500 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
+        </form>
+    </header>
+
+    <content>
+        <div class="flex items-center my-5 justify-around">
+        
+            {# ========== Boutons de tri par département =========#}
+            <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
+                <p value="all" class="reset bg-slate-300 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
+                <p value="city_ker" data-departement="CityKer" class="category bg-orange-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">CITY KER</p>
+                <p value="velo" data-departement="Velo" class="category bg-yellow-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Velo</p>
+                <p value="vert" data-departement="Vert" class="category bg-green-400 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold cursor-pointer">Vert</p>
+            </div>
+
+            {# ========== Bouton renvoyant au formulaire de création de question =========#}
+            <a href="{{ path('app_question_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle question</a>
+        </div>
+
+
+
+        {# ========== Affichage des questions/réponses sous forme de tableau =========#}
+        <table class="table mx-auto shadow-xl text-lg w-11/12">
+
+            <thead>
+
+                <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+
+                    <th>Departement</th>
+                    <th>Categorie</th>
+                    <th>Label</th>
+                    <th>Reponse</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+
+            <tbody class="bg-blue-900">
+
+            {% for question in questions %}
+
+                <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
+
+                    <td class="p-2 text-slate-800 text-center uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-orange-400' : question.departement is same as 'Velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ question.departement }}</td>
+                    <td class="p-2 bg-emerald-500 text-slate-800 text-center uppercase font-extrabold w-28">{{ question.categorie }}</td>
+                    <td class="p-2 bg-blue-900 text-slate-100 font-semibold">{{ question.label }}</td>
+                    <td class="bg-green-100 pl-1">{{ question.reponse | raw}}</td>
+                    <td class="bg-blue-900 p-2 text-center">
+                        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-green-400  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Voir</a>
+                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+
+                <tr>
+
+                    <td colspan="5" class="text-slate-100 p-3">Aucune demande ne correspond à votre recherche...</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </content>
+
+    <footer class="flex justify-center bg-blue-900 p-3 text-slate-100 mt-28">
+        <p>Copyright © 2023 - Tous droits réservés</p>
+    </footer>
+{% endblock %}

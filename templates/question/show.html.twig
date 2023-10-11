@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question{% endblock %}
+
+{% block body %}
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Demande</h1>
+
+    {# ====== Affichage de la demande ========= #}
+    <table class="table mx-auto shadow-xl text-lg w-11/12 my-6">
+        <tbody>
+            <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+                <th>Id</th>
+                <th>Question</th>
+                <th>Reponse</th>
+            </tr>
+
+            <tr class="border-2 border-slate-900">
+                <td class="p-4 bg-yellow-100 text-slate-800 text-center uppercase font-extrabold border-2 border-slate-900 w-16">{{ question.id }}</td>
+                {# <td class="p-4 text-slate-800 text-center uppercase font-extrabold border-2 border-slate-900 w-28 {{ demande.Categorie is same as 'city_ker' ? 'bg-orange-400' : demande.Categorie is same as 'velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ demande.Categorie }}</td> #}
+                {# <td class="p-4 bg-emerald-500 text-slate-800 text-center uppercase font-extrabold w-28">{{ demande.SousCategorie }}</td> #}
+                <td class="p-4 bg-blue-900 text-slate-100 font-semibold">{{ question.label }}</td>
+                <td class="bg-green-100 pl-1">{{ question.reponse | raw }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# ========== Boutons d'actions ======== #}
+    <div class="flex justify-between w-4/5 mx-auto">
+        <div class="flex gap-3">
+
+            <a href="{{ path('app_question_index') }}" class="bg-orange-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+            <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-yellow-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Modifier</a>
+        </div>
+
+        {{ include('question/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

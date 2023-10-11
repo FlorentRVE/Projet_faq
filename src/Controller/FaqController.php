@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Demande;
+use App\Entity\Question;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Repository\DemandeRepository;
+use App\Repository\QuestionRepository;
 
 class FaqController extends AbstractController
 {
@@ -17,23 +17,27 @@ class FaqController extends AbstractController
     // Seulement affichage et recherche des questions/réponses depuis la BDD
 
     #[Route('/faq', name: 'app_faq')]
-    public function getDemandes(DemandeRepository $demandeRepository, Request $request): Response
+    public function getQuestions(QuestionRepository $questionRepository, Request $request): Response
     {
-        $demande = $demandeRepository->findAll(); // Récupération des données de la base
+        $question = $questionRepository->findAll(); // Récupération des données de la base
 
         $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
         $data = []; // Donnée à afficher
         
-        foreach($demande as $item) {
+        foreach($question as $item) {
             
             // Si le terme de recherche est vide ou si la question ou réponse contient le terme de recherche
             // on ajoute l'objet à la liste à afficher
-            if (empty($searchTerm) || stripos($item->getQuestion(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
+            if (empty($searchTerm) || stripos($item->getLabel(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
+                
+                $categorie = $item->getCategorie(); 
+                $departement = $categorie->getDepartement();
+
                 $data[] = [
-                    'Categorie' => $item->getCategorie(),
-                    'SousCategorie' => $item->getSousCategorie(),
-                    'Question' => $item->getQuestion(),
-                    'Reponse' => $item->getReponse(),
+                    'categorie' => $categorie,
+                    'departement' => $departement->getLabel(),
+                    'question' => $item->getLabel(),
+                    'reponse' => $item->getReponse(),
                 ];
             }
             

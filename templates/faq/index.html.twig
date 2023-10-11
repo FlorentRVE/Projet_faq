@@ -11,7 +11,7 @@
 
 <body class="bg-slate-50">
 
-{# ========== Page principale FAQ =========#}
+    {# ========== Page principale FAQ =========#}
 
     <header class="bg-blue-900 p-2">
     
@@ -26,119 +26,43 @@
 
     </header>
 
-    <content class="flex flex-col w-[96%] mx-auto gap-8 mt-10">
+    <content class="flex flex-col gap-10 mt-10">
 
-        {# ========== Boutons de tri par catégorie =========#}
+        {# ========== Boutons de tri par département =========#}
         <div class="flex justify-evenly bg-blue-900 p-3 rounded-2xl shadow-xl uppercase mx-auto w-2/5">
 
-            <p value="all" class="reset bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
-            <p value="city_ker" data-categorie="city_ker" class="category bg-orange-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">CITY KER</p>
-            <p value="velo" data-categorie="velo" class="category bg-yellow-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Velo</p>
-            <p value="vert" data-categorie="vert" class="category bg-green-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Vert</p>
+            <p class="reset bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+            <p data-departement="CityKer" class="category bg-orange-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">CityKer</p>
+            <p data-departement="Velo" class="category bg-yellow-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Velo</p>
+            <p data-departement="Vert" class="category bg-green-400 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Vert</p>
         </div>
 
-        {# ========== Affichage des questions =========#}
-        <div class="flex gap-4 mx-auto w-11/12">
+        {# ========== Affichage des questions regroupées par catégorie =========#}
+        <div class="flex flex-wrap gap-10 justify-center">
 
             {% if data is not empty %}
-            
-
-                {% set displayInfoGenerales = false %}
-                {% set displayReclamations = false %}
-                {% set displayTest = false %}
-
-                {# ========== INFO GENERALES =========#}
+                {% set categories = [] %}
                 {% for dataItem in data %}
-
-                    {% if dataItem.SousCategorie is same as 'infos_generales' %}
-                    
-                        {% set displayInfoGenerales = true %}
+                    {% set category = dataItem.categorie %}
+                    {% if category not in categories %}
+                        {% set categories = categories|merge([category]) %}
                     {% endif %}
                 {% endfor %}
 
-                {% if displayInfoGenerales %}
-                    <div class="infoGen flex flex-col shadow-lg w-full rounded-xl bg-green-300">
+                {% for category in categories %}
 
-                        <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Infos générales</h2>
-                        <div class="flex flex-col p-3" data-souscategorie="infos_generales">
-
-                            {% for dataItem in data %}
-                                {% if dataItem.SousCategorie is same as 'infos_generales' %}
-                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
-                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                    <div class="container flex flex-col shadow-lg rounded-xl bg-green-300 w-5/12">
+                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ category }}</h3>
+                        {% for dataItem in data %}
+                            {% if dataItem.categorie == category %}
+                                <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
+                                    <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.question }}</h3>
+                                    <div class="p-1 answer">{{ dataItem.reponse | raw }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                {% endif %}
-
-
-                {# ========== RECLAMATIONS_INFORMATIONS =========#}
-                {% for dataItem in data %}
-
-                    {% if dataItem.SousCategorie is same as 'reclamations_informations' %}
-                    
-                        {% set displayReclamations = true %}
-                    {% endif %}
                 {% endfor %}
-
-                {% if displayReclamations %}
-                    <div class="reclam flex flex-col shadow-lg w-full rounded-xl bg-green-300">
-
-                        <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Reclamations Informations</h2>
-                        <div class="flex flex-col p-3" data-souscategorie="reclamations_informations">
-
-                            {% for dataItem in data %}
-                                {% if dataItem.SousCategorie is same as 'reclamations_informations' %}
-                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
-                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
-
-                {# ========== SOUS_CATEGORIE_TEST =========#}
-                {% for dataItem in data %}
-
-                    {% if dataItem.SousCategorie is same as 'sous_categorie_test' %}
-                    
-                        {% set displayTest = true %}
-                    {% endif %}
-                {% endfor %}
-
-                {% if displayTest %}
-                    <div class="test flex flex-col shadow-lg w-full rounded-xl bg-green-300">
-
-                        <h2 class="bg-blue-900 p-2 font-semibold text-slate-100 rounded-t-xl uppercase text-center">Sous-catégorie Test</h2>
-                        <div class="flex flex-col p-3" data-souscategorie="sous_categorie_test">
-
-                            {% for dataItem in data %}
-                                {% if dataItem.SousCategorie is same as 'sous_categorie_test' %}
-                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg mb-3 cursor-pointer" data-categorie="{{ dataItem.Categorie }}">
-                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.Question }}</h3>
-                                        <div class="p-1 answer">{{ dataItem.Reponse | raw }}</div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
-
-
-
-            {% else %}
-
-                <div class="bg-yellow-100 ml-4 rounded-xl p-11">
-                    <p class="text-red-500 text-xl">Aucune question ne correspond à votre recherche...</p>
-                </div>
-
             {% endif %}
         </div>
     </content>
