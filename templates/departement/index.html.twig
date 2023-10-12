@@ -21,9 +21,9 @@
             <tbody class="bg-blue-900">
             {% for departement in departements %}
                 <tr class="border-2 border-slate-900 objet text-center">
-                    <td class="bg-green-100 pl-1 border-2 border-slate-900">{{ departement.id }}</td>
-                    <td class="bg-green-100 pl-1 border-2 border-slate-900">{{ departement.label }}</td>
-                    <td class="bg-blue-900 p-2 text-center">
+                    <td class="bg-slate-50 pl-1 border-2 border-slate-900">{{ departement.id }}</td>
+                    <td class="bg-slate-50 pl-1 border-2 border-slate-900">{{ departement.label }}</td>
+                    <td class="bg-blue-900 p-2 text-center w-1/5">
                         <a href="{{ path('app_departement_edit', {'id': departement.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
                     </td>
                 </tr>

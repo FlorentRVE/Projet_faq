@@ -21,7 +21,7 @@
             <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
                 <label for="search" class="text-slate-100">Rechercher une question </label>
                 <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
-                <button type="submit" class="bg-green-500 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
+                <button type="submit" class="bg-blue-700 rounded-2xl text-center px-4 py-1 hover:brightness-125 text-slate-50">Rechercher</button>
             </form>
 
         </header>
@@ -30,9 +30,9 @@
 
             {# ==================== Boutons de tri par département ==============#}
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
-            <div class="flex justify-evenly bg-blue-900 p-3 rounded-2xl shadow-xl uppercase mx-auto w-2/5">
+            <div class="flex justify-evenly p-3 rounded-2xl uppercase mx-auto w-2/5">
 
-                <p class="reset bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+                <p class="reset bg-blue-700 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
                 {# === Récupère les départements et les stocke dans un tableau === #}
                 {% set departements = [] %}
@@ -45,7 +45,7 @@
 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in departements %}
-                    <p data-departement="{{ departement }}" class="category bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-blue-700 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
                 {% endfor %}
             </div>
 
@@ -56,7 +56,9 @@
                 {% if data is not empty %}
                     {% set categories = [] %}
                     {% for dataItem in data %}
-                        {% set category = dataItem.categorie %}
+                        {# Ici on doit convertir category en string pour que la valeur soit strictement unique dans le tableau #}
+                        {# sinon on aurait par exemple eu un conteneur "horaire" pour chaque département #}
+                        {% set category = dataItem.categorie ~ '' %} 
                         {% if category not in categories %}
                             {% set categories = categories|merge([category]) %}
                         {% endif %}
@@ -65,13 +67,13 @@
                     {# === Pour chaque catégorie on crée un container et on y affiche toutes les questions de cette catégorie === #}
                     {% for category in categories %}
 
-                        <div class="container flex flex-col shadow-lg rounded-xl bg-green-300 w-5/12">
+                        <div class="container flex flex-col shadow-lg rounded-xl w-5/12">
                             <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ category }}</h3>
                             {% for dataItem in data %}
                                 {% if dataItem.categorie == category %}
-                                    <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
-                                        <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.question }}</h3>
-                                        <div class="px-3 py-1 answer">{{ dataItem.reponse | raw }}</div>
+                                    <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
+                                        <h3 class=" text-blue-600 underline">{{ dataItem.question }}</h3>
+                                        <div class="answer">{{ dataItem.reponse | raw }}</div>
                                     </div>
                                 {% endif %}
                             {% endfor %}

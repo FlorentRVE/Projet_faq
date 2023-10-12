@@ -12,18 +12,18 @@
         <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
             <label for="search" class="text-slate-100">Rechercher une question </label>
             <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
-            <button type="submit" class="bg-green-500 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
+            <button type="submit" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
         </form>
     </header>
 
     <content>
-        <div class="flex items-center my-5 justify-around">
+        <div class="flex items-center justify-around my-16">
         
             {# ========== Boutons de tri par département =========#}
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
             <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
 
-                <p class="reset bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-36">Tous</p>
+                <p class="reset bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
 
                 {# === Récupère les départements et les stocke dans un tableau === #}
                 {% set departements = [] %}
@@ -36,7 +36,7 @@
                 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in departements %}
-                    <p data-departement="{{ departement }}" class="category bg-slate-300 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-36">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">{{ departement }}</p>
                 {% endfor %}
             </div>
 
@@ -44,8 +44,8 @@
             <a href="{{ path('app_question_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle question</a>
             
             <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
-                <a href="{{ path('app_categorie_index') }}" target="_blank" class="bg-yellow-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion catégorie</a>
-                <a href="{{ path('app_departement_index') }}" target="_blank" class="bg-yellow-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion département</a>
+                <a href="{{ path('app_categorie_index') }}" target="_blank" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion catégorie</a>
+                <a href="{{ path('app_departement_index') }}" target="_blank" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion département</a>
             </div>
         </div>
 
@@ -72,13 +72,17 @@
 
                 <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
 
-                    <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-orange-400' : question.departement is same as 'Velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ question.departement }}</td>
-                    <td class="p-2 bg-emerald-500 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
-                    <td class="p-2 bg-blue-900 text-slate-100 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
-                    <td class="bg-green-100 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
+                    <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
+                    <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
+                    <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
+                    <td class="bg-slate-50 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
                     <td class="bg-blue-900 p-2 text-center">
-                        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-green-400  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Voir</a>
-                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
+                        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a>
+                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
+                        <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
+                            <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
             {% else %}
