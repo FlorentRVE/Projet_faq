@@ -40,6 +40,7 @@
         {# ========== Affichage des questions regroupées par catégorie =========#}
         <div class="flex flex-wrap gap-10 justify-center">
 
+            {# === Récupère les catégories et les stocke dans un tableau === #}
             {% if data is not empty %}
                 {% set categories = [] %}
                 {% for dataItem in data %}
@@ -49,6 +50,7 @@
                     {% endif %}
                 {% endfor %}
 
+                 {# === Pour chaque catégorie on crée un container et on y affiche toutes les questions de cette catégorie === #}
                 {% for category in categories %}
 
                     <div class="container flex flex-col shadow-lg rounded-xl bg-green-300 w-5/12">
@@ -57,7 +59,7 @@
                             {% if dataItem.categorie == category %}
                                 <div class="toggleBtn objet bg-green-100 rounded-xl shadow-lg text-lg m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
                                     <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ dataItem.question }}</h3>
-                                    <div class="p-1 answer">{{ dataItem.reponse | raw }}</div>
+                                    <div class="px-3 py-1 answer">{{ dataItem.reponse | raw }}</div>
                                 </div>
                             {% endif %}
                         {% endfor %}
