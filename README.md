@@ -52,3 +52,4 @@ A venir ...
 - [Adminer](https://www.adminer.org/)
 - [FontAwesome](https://fontawesome.com/)
 - [Twig](https://twig.symfony.com/)
+- [CKEditor](https://ckeditor.com/)
