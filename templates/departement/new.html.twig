@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Departement{% endblock %}
+{% block title %}Nouveau Departement{% endblock %}
 
 {% block body %}
-    <h1>Create new Departement</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Créer un nouveau département</h1>
+
 
     {{ include('departement/_form.html.twig') }}
 
-    <a href="{{ path('app_departement_index') }}">back to list</a>
+        <div class="flex justify-between w-4/5 mx-auto">
+        <a href="{{ path('app_departement_index') }}"  class="bg-orange-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+    </div>
 {% endblock %}

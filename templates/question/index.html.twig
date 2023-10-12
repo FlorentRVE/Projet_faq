@@ -3,10 +3,10 @@
 {% block title %}Question index{% endblock %}
 
 {% block body %}
-    {# ========== Page principale Panneau d'administration =========#}
+    {# ========== Page principale Panneau d'administration pour gérer les questions =========#}
 
     <header>
-        <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Panneau d'administration FAQ</h1>
+        <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Gestion des questions</h1>
 
         {# ========== Barre de recherche =========#}
         <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
@@ -29,6 +29,11 @@
 
             {# ========== Bouton renvoyant au formulaire de création de question =========#}
             <a href="{{ path('app_question_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle question</a>
+            
+            <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
+                <a href="{{ path('app_categorie_index') }}" target="_blank" class="bg-yellow-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion catégorie</a>
+                <a href="{{ path('app_departement_index') }}" target="_blank" class="bg-yellow-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion département</a>
+            </div>
         </div>
 
 

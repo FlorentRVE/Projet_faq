@@ -3,11 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Question;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-// use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class QuestionType extends AbstractType
 {
@@ -16,7 +17,16 @@ class QuestionType extends AbstractType
         $builder
             ->add('label')
             ->add('reponse', CKEditorType::class)
-            ->add('categorie')
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'label',
+                'placeholder' => 'Choisir catégorie',
+                'required' => true,
+                'label' => 'Category',
+                'group_by' => function (?Categorie $categorie) {
+                    return $categorie ? $categorie->getDepartement()->getLabel() : '';
+                }
+            ])
         ;
     }
 

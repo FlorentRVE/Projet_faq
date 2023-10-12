@@ -3,33 +3,38 @@
 {% block title %}Categorie index{% endblock %}
 
 {% block body %}
-    <h1>Categorie index</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Gestion Catégories</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Label</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for categorie in categories %}
-            <tr>
-                <td>{{ categorie.id }}</td>
-                <td>{{ categorie.label }}</td>
-                <td>
-                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <content>
+        <div class="flex items-center my-5 justify-around">
+            <a href="{{ path('app_categorie_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle catégorie</a>
+        </div>
 
-    <a href="{{ path('app_categorie_new') }}">Create new</a>
+        <table class="table mx-auto shadow-xl text-lg w-11/12">
+            <thead>
+                <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+                    <th>Id</th>
+                    <th>Label</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-blue-900">
+            {% for categorie in categories %}
+                <tr class="border-2 border-slate-900 objet text-center">
+                    <td class="bg-green-100 pl-1">{{ categorie.id }}</td>
+                    <td class="bg-green-100 pl-1">{{ categorie.label }}</td>
+                    <td class="bg-blue-900 p-2 text-center">
+                        <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+
+                    <td colspan="5" class="text-slate-100 p-3">Aucune demande ne correspond à votre recherche...</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </content>
+
 {% endblock %}
