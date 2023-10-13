@@ -3,102 +3,124 @@
 {% block title %}Question index{% endblock %}
 
 {% block body %}
-    {# ========== Page principale Panneau d'administration pour gérer les questions =========#}
+    <div class="bg-slate-100 p-3">
+            {# ========== Page principale Panneau d'administration pour gérer les questions =========#}
 
-    <header>
-        <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Gestion des question</h1>
+        <header>        
+            {# ========== Barre de recherche =========#}
+            <div class="ml-40">
+                <form action="#" method="get" class="p-4 text-center shadow-md rounded-2xl w-11/12 mx-auto bg-slate-50">
+                    {# <label for="search" class="text-slate-100">Rechercher une question </label> #}
+                    <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg border border-slate-900" placeholder="Rechercher dans les questions ou réponses ...">
+                    <button type="submit" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-4 py-1 hover:brightness-125 font-semibold text-lg">Rechercher</button>
+                </form>
+            </div>
 
-        {# ========== Barre de recherche =========#}
-        <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
-            <label for="search" class="text-slate-100">Rechercher une question </label>
-            <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
-            <button type="submit" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-4 py-1 hover:brightness-125">Rechercher</button>
-        </form>
-    </header>
+        </header>
 
-    <content>
-        <div class="flex items-center justify-around my-16">
-        
-            {# ========== Boutons de tri par département =========#}
-            {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
-            <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
+        <sidebar>
+            {# =========== Sidebar ============= #}
+            <div class="bg-slate-800 absolute left-0 top-0 h-screen flex flex-col items-center w-48">
+                <div class="w-10 h-10 bg-yellow-300 rounded-full flex justify-center items-center font-bold text-black mt-6">LOGO</div>
+                <div class="flex flex-col items-center gap-3 mt-10 border-t border-slate-600 pt-4">
+                    <a href="{{ path('app_categorie_index') }}" class="text-slate-50 text-center hover:bg-blue-700 mb-5 px-4 py-1 rounded-lg w-full">Gestion catégorie</a>
+                    <a href="{{ path('app_departement_index') }}" class="text-slate-50 text-center hover:bg-blue-700 mb-5 px-4 py-1 rounded-lg w-full">Gestion département</a>
+                </div>
+            </div>
 
-                <p class="reset bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
 
-                {# === Récupère les départements et les stocke dans un tableau === #}
-                {% set departements = [] %}
-                {% for question in questions %}
-                    {% set departement = question.departement %}
-                    {% if departement not in departements %}
-                        {% set departements = departements|merge([departement]) %}
-                    {% endif %}
-                {% endfor %}
+        </sidebar>
+
+
+        <content>
+            <div class="ml-40">
+
+                {# =========== Bloc bouton tri et nouvelle question========== #}
+                <div class="flex items-end justify-between my-10 w-11/12 mx-auto">
+
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-xl uppercase text-slate-900 font-bold text-center mt-4">Gestion des question</h1>
+
                 
-                {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
-                {% for departement in departements %}
-                    <p data-departement="{{ departement }}" class="category bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">{{ departement }}</p>
-                {% endfor %}
+                        {# ========== Boutons de tri par département =========#}
+                        {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
+                        <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
+
+                            <p class="reset bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
+
+                            {# === Récupère les départements et les stocke dans un tableau === #}
+                            {% set departements = [] %}
+                            {% for question in questions %}
+                                {% set departement = question.departement %}
+                                {% if departement not in departements %}
+                                    {% set departements = departements|merge([departement]) %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
+                            {% for departement in departements %}
+                                <p data-departement="{{ departement }}" class="category bg-blue-700 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">{{ departement }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                    {# ========== Bouton renvoyant au formulaire de création de question =========#}
+                    <a href="{{ path('app_question_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle question</a>
+                    
+                </div>
+
+
+
+                {# ========== Affichage des questions/réponses sous forme de tableau =========#}
+                <table class="table mx-auto shadow-xl text-lg w-11/12">
+
+                    <thead>
+
+                        <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+
+                            <th>Departement</th>
+                            <th>Categorie</th>
+                            <th>Question</th>
+                            <th>Reponse</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="bg-blue-900">
+
+                    {% for question in questions %}
+
+                        <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
+
+                            <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
+                            <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
+                            <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
+                            <td class="bg-slate-50 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
+                            <td class="bg-blue-900 p-2 text-center">
+                                {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
+                                <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
+                                <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
+                                    <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-slate-100 p-3">Aucune demande ne correspond à votre recherche...</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </content>
 
-            {# ========== Bouton renvoyant au formulaire de création de question =========#}
-            <a href="{{ path('app_question_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle question</a>
-            
-            <div class="flex justify-between gap-3 bg-blue-900 p-3 rounded-2xl shadow-lg uppercase">
-                <a href="{{ path('app_categorie_index') }}" target="_blank" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion catégorie</a>
-                <a href="{{ path('app_departement_index') }}" target="_blank" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Gestion département</a>
-            </div>
-        </div>
+        <footer class="flex justify-center bg-blue-900 p-3 text-slate-100 mt-28">
+            <p>Copyright © 2023 - Tous droits réservés</p>
+        </footer>
+    </div>
 
-
-
-        {# ========== Affichage des questions/réponses sous forme de tableau =========#}
-        <table class="table mx-auto shadow-xl text-lg w-11/12">
-
-            <thead>
-
-                <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
-
-                    <th>Departement</th>
-                    <th>Categorie</th>
-                    <th>Question</th>
-                    <th>Reponse</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-
-            <tbody class="bg-blue-900">
-
-            {% for question in questions %}
-
-                <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
-
-                    <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
-                    <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
-                    <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
-                    <td class="bg-slate-50 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
-                    <td class="bg-blue-900 p-2 text-center">
-                        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a>
-                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
-                        <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
-                            <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            {% else %}
-
-                <tr>
-
-                    <td colspan="5" class="text-slate-100 p-3">Aucune demande ne correspond à votre recherche...</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-
-    </content>
-
-    <footer class="flex justify-center bg-blue-900 p-3 text-slate-100 mt-28">
-        <p>Copyright © 2023 - Tous droits réservés</p>
-    </footer>
 {% endblock %}

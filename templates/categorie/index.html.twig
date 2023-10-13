@@ -5,15 +5,14 @@
 {% block body %}
     <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Gestion Catégories</h1>
 
-    <content>
-        <div class="flex items-center my-5 justify-around">
+    <content class="flex flex-col gap-10 w-11/12 mx-auto">
+        <div class="mt-12 self-end">
             <a href="{{ path('app_categorie_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle catégorie</a>
         </div>
 
-        <table class="table mx-auto shadow-xl text-lg w-11/12">
+        <table class="table shadow-xl text-lg">
             <thead>
                 <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
-                    <th>Id</th>
                     <th>Departement</th>
                     <th>Label</th>
                     <th>actions</th>
@@ -22,7 +21,6 @@
             <tbody class="bg-blue-900">
             {% for categorie in categories %}
                 <tr class="border-2 border-slate-900 objet text-center">
-                    <td class="bg-slate-50 pl-1 border-2 border-slate-900">{{ categorie.id }}</td>
                     <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 bg-slate-300">{{ categorie.departement }}</td>
                     <td class="bg-slate-50 pl-1 border-2 border-slate-900">{{ categorie.label }}</td>
                     <td class="bg-blue-900 p-2 text-center">
@@ -37,6 +35,11 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="">
+            <a href="{{ path('app_question_index') }}" class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+
+        </div>
     </content>
 
 {% endblock %}
