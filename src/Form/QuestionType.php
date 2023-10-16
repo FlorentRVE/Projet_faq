@@ -20,7 +20,7 @@ class QuestionType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'label',
-                'placeholder' => 'Choisir catégorie',
+                'placeholder' => '== Choisissez une catégorie ==',
                 'required' => true,
                 'label' => 'Category',
                 'group_by' => function (?Categorie $categorie) {

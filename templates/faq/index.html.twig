@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html.twig' %}
 
-    <head>
-        <title>FAQ numéro client</title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-        <script src="{{ asset('/js/script.js') }}"></script>
-    </head>
+{% block title %}FAQ numéro client{% endblock %}
 
-    <body class="bg-slate-50">
+{% block body %}
+
+    <div>
 
         {# ========== Page principale FAQ =========#}
 
-        <header class="bg-blue-900 p-2">
+        <header class="bg-slate-800 p-2">
         
-            <h1 class=" text-center text-3xl uppercase text-slate-100 font-bold">FAQ numéro client</h1>
+            <div class="flex">
+                <h1 class="text-center text-3xl uppercase text-slate-100 font-bold flex-auto ml-24">FAQ numéro client</h1>
+
+                <a href="{{ path('app_question_index') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
+                    <i class="fa-solid fa-user text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
+                </a>
+            </div>
 
             {# ========== Barre de recherche =========#}
-            <form action="#" method="get" class="p-4 shadow-lg text-lg text-center bg-blue-900 font-semibold">
+            <form action="#" method="get" class="p-4 shadow-lg text-lg text-center  font-semibold">
                 <label for="search" class="text-slate-100">Rechercher une question </label>
                 <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
-                <button type="submit" class="bg-blue-700 rounded-2xl text-center px-4 py-1 hover:brightness-125 text-slate-50">Rechercher</button>
+                <button type="submit" class="text-center px-4 py-1 hover:brightness-125 text-slate-50 text-2xl transition-all hover:scale-110"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 
         </header>
 
-        <content class="flex flex-col gap-10 mt-10">
+        <content class="flex flex-col gap-10 mt-10 mb-10">
 
             {# ==================== Boutons de tri par département ==============#}
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
             <div class="flex justify-evenly p-3 rounded-2xl uppercase mx-auto w-2/5">
 
-                <p class="reset bg-blue-700 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+                <p class="reset bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
                 {# === Récupère les départements et les stocke dans un tableau === #}
                 {% set departements = [] %}
@@ -45,7 +46,7 @@
 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in departements %}
-                    <p data-departement="{{ departement }}" class="category bg-blue-700 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
                 {% endfor %}
             </div>
 
@@ -68,11 +69,11 @@
                     {% for category in categories %}
 
                         <div class="container flex flex-col shadow-lg rounded-xl w-5/12">
-                            <h3 class="bg-blue-900 p-2 rounded-t-xl font-semibold text-slate-100">{{ category }}</h3>
+                            <h3 class="bg-slate-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ category }}</h3>
                             {% for dataItem in data %}
                                 {% if dataItem.categorie == category %}
                                     <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
-                                        <h3 class=" text-blue-600 underline">{{ dataItem.question }}</h3>
+                                        <h3 class=" text-blue-700 underline">{{ dataItem.question }}</h3>
                                         <div class="answer">{{ dataItem.reponse | raw }}</div>
                                     </div>
                                 {% endif %}
@@ -89,8 +90,5 @@
             </div>
         </content>
 
-        <footer class="flex justify-center bg-blue-900 p-3 text-slate-100 mt-28">
-            <p>Copyright © 2023 - Tous droits réservés</p>
-        </footer>
-    </body>
-</html>
+    </div>
+{% endblock %}

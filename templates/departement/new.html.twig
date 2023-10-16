@@ -3,12 +3,12 @@
 {% block title %}Nouveau Departement{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Créer un nouveau département</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Créer un nouveau département</h1>
 
 
     {{ include('departement/_form.html.twig') }}
 
         <div class="flex justify-between w-4/5 mx-auto">
-        <a href="{{ path('app_departement_index') }}"  class="bg-blue-700 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+        <a href="{{ path('app_departement_index') }}"  class="bg-blue-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
     </div>
 {% endblock %}
