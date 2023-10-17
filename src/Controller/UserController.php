@@ -18,8 +18,31 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+        $data = [];
+
+        foreach($users as $user){
+            
+            // Ici on va parcourir la collection Departement à partir de User vu que la relation est ManyToMany
+            $departements = $user->getDepartement();
+            // Le tableau qui va contenir les labels des departements
+            $departementLabels = []; 
+
+            foreach($departements as $departement){
+                $departementLabels [] =  $departement->getLabel();
+            }
+
+            $data[] = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'roles' => $user->getRoles(),
+                'departement' => $departementLabels,
+            ];
+        }
+        
+        
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $data,
         ]);
     }
 

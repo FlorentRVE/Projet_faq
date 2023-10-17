@@ -21,9 +21,13 @@ class Departement
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Categorie::class)]
     private Collection $categories;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'departement')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function __toString()
@@ -73,6 +77,33 @@ class Departement
             if ($category->getDepartement() === $this) {
                 $category->setDepartement(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeDepartement($this);
         }
 
         return $this;

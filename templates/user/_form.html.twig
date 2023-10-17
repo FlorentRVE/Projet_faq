@@ -18,6 +18,11 @@
                 </div>
 
                 <div class="mb-8 flex flex-col">
+                    {{ form_label(form.departement, 'Departement', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                    {{ form_widget(form.departement, {'attr': {'class': 'text-slate-100 flex gap-2'}}) }}
+                </div>
+
+                <div class="mb-8 flex flex-col">
                     {{ form_label(form.roles, 'Roles', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
                     {{ form_widget(form.roles, {'attr': {'class': 'text-slate-100 flex gap-2'}}) }}
                 </div>

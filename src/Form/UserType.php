@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Departement;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +24,12 @@ class UserType extends AbstractType
                     'Admin' => 'ROLE_ADMIN',
                     'Utilisateur' => 'ROLE_USER',
                 ],
+                'multiple' => true,
+                'expanded' => true,
+            ])
+            ->add('departement', EntityType::class, [
+                'class' => Departement::class,
+                'choice_label' => 'label',
                 'multiple' => true,
                 'expanded' => true,
             ])

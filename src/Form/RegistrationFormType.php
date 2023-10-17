@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Form\DepartementType;
+use App\Entity\Departement;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -22,8 +25,13 @@ class RegistrationFormType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
-                    'Utilisateur' => 'ROLE_USER',
                 ],
+                'multiple' => true,
+                'expanded' => true,
+            ])
+            ->add('departement', EntityType::class, [
+                'class' => Departement::class,
+                'choice_label' => 'label',
                 'multiple' => true,
                 'expanded' => true,
             ])
