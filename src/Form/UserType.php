@@ -22,7 +22,6 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
-                    'Utilisateur' => 'ROLE_USER',
                 ],
                 'multiple' => true,
                 'expanded' => true,
@@ -40,7 +39,7 @@ class UserType extends AbstractType
                 'label' => 'Mot de passe',
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Entrez votre nouveau mot de passe',
+                    'placeholder' => "Rentrer le mot de passe de l'utilisateur",
                 ],
                 'constraints' => [
                     new NotBlank([
