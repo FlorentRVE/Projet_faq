@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Repository\DepartementRepository;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,21 +25,24 @@ class QuestionController extends AbstractController
     // ============== Panneau d'administration avec affichage de toutes les questions =============================
 
     #[Route('/', name: 'app_question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository, Request $request): Response
+    public function index(DepartementRepository $departementRepository, QuestionRepository $questionRepository, Request $request): Response
     {
+
+        // $departement = $departementRepository->getUserDepartments($this->getUser()); // Récupération des données de la base
+        // dd($departement);
 
         $question = $questionRepository->findAll(); // Récupération des données de la base
 
         $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
         $data = []; // Donnée à afficher
-        
-        foreach($question as $item) {
-            
+
+        foreach ($question as $item) {
+
             // Si le terme de recherche est vide OU si la question/réponse contient le terme de recherche
             // on ajoute l'objet à la liste à afficher
             if (empty($searchTerm) || stripos($item->getLabel(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
 
-                $categorie = $item->getCategorie(); 
+                $categorie = $item->getCategorie();
                 $departement = $categorie->getDepartement();
 
                 $data[] = [
@@ -49,8 +53,6 @@ class QuestionController extends AbstractController
                     'reponse' => $item->getReponse(),
                 ];
             }
-            
-            
         }
 
         return $this->render('question/index.html.twig', [
@@ -59,7 +61,7 @@ class QuestionController extends AbstractController
         ]);
     }
 
-     // =============== Création d'une nouvelle demande =========================
+    // =============== Création d'une nouvelle demande =========================
     #[Route('/new', name: 'app_question_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -112,7 +114,7 @@ class QuestionController extends AbstractController
     #[Route('/{id}', name: 'app_question_delete', methods: ['POST'])]
     public function delete(Request $request, Question $question, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $question->getId(), $request->request->get('_token'))) {
             $entityManager->remove($question);
             $entityManager->flush();
         }
