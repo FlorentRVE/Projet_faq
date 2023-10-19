@@ -10,15 +10,46 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[Route('/categorie')]
 class CategorieController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository): Response
     {
+        
+        //Récupération de l'utilisateur authentifié
+        $user = $this->security->getUser()->getUserIdentifier();
+
+
+        // Récupération des catégories en fonction du departement de l'utilisateur authentifié
+        $categories = $categorieRepository->getCategoriesViaUserDepartement($user)->getQuery()->getResult();
+
+        //Donnée à envoyer
+        $data = [];
+        
+        // Mise en forme des données à envoyer
+        foreach($categories as $item) {
+
+                $data[] = [
+                    'id' => $item->getId(),
+                    'label' => $item->getLabel(),
+                    'departement' => $item->getDepartement()->getLabel(),
+                ];           
+            
+        }
+
+
         return $this->render('categorie/index.html.twig', [
-            'categories' => $categorieRepository->findAll(),
+            'categories' => $data,
         ]);
     }
 

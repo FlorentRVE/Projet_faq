@@ -108,46 +108,21 @@
 
                     {% for question in questions %}
 
-                        {% if app.user and not is_granted('ROLE_ADMIN') %}
-                            {% for departement in app.user.departement %}
-                                {% if departement == question.departement %}
+                        <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
 
-                                    <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
-
-                                        <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
-                                        <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
-                                        <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
-                                        <td class="bg-slate-50 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
-                                        <td class="bg-blue-900 p-2 text-center">
-                                            {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
-                                            <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
-                                            <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
-                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
-                                                <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                    <tr class="border-2 border-slate-900 objet" data-departement={{ question.departement }}>
-
-                                    <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
-                                    <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
-                                    <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
-                                    <td class="bg-slate-50 border-2 border-slate-900 p-2">{{ question.reponse | raw}}</td>
-                                    <td class="bg-blue-900 p-2 text-center">
-                                        {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
-                                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
-                                        <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
-                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
-                                            <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        {% endif %}
+                            <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ question.departement is same as 'CityKer' ? 'bg-slate-400' : question.departement is same as 'Velo' ? 'bg-slate-300' : 'bg-slate-200'}}">{{ question.departement }}</td>
+                            <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ question.categorie }}</td>
+                            <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold">{{ question.label }}</td>
+                            <td class="bg-slate-50 border-2 border-slate-900 pl-1">{{ question.reponse | raw}}</td>
+                            <td class="bg-blue-900 p-2 text-center">
+                                {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
+                                <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
+                                <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
+                                    <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
                     {% else %}
 
                         <tr>

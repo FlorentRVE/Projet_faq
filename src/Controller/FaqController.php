@@ -21,11 +21,16 @@ class FaqController extends AbstractController
     public function getQuestions(QuestionRepository $questionRepository, Request $request): Response
     {
 
-        $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
+        // Récupération de la valeur de la recherche
+        $searchTerm = $request->query->get('search');
 
+        // On récupére les données de la base en fonction de la recherche
         $question = $questionRepository->getQuestionsFromSearch($searchTerm);
-        $data = []; // Donnée à afficher
+
+        // Donnée à envoyer
+        $data = [];
         
+        //Mise en forme des données à envoyer
         foreach($question as $item) {
 
                 $data[] = [

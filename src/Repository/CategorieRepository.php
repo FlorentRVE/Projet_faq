@@ -21,6 +21,9 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    // Requête permettant de récupérer les catégories en fonction du departement de l'utilisateur authentifie
+    // /!\ Ici on a volontairement omis getQuery et getResult pour ne pas créer une erreur dans QuestionType.php
+    // penser à les rajouter si utiliser dans un controller
     public function getCategoriesViaUserDepartement($user)
     {
         return $this->createQueryBuilder('c')

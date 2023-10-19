@@ -11,10 +11,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[Route('/question')]
 class QuestionController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     // ======================== Controller de la partie administrateur de la FAQ =========================
 
@@ -25,34 +32,34 @@ class QuestionController extends AbstractController
     // ============== Panneau d'administration avec affichage de toutes les questions =============================
 
     #[Route('/', name: 'app_question_index', methods: ['GET'])]
-    public function index(DepartementRepository $departementRepository, QuestionRepository $questionRepository, Request $request): Response
+    public function index(QuestionRepository $questionRepository, Request $request): Response
     {
 
-        // $departement = $departementRepository->getUserDepartments($this->getUser()); // Récupération des données de la base
-        // dd($departement);
+        //Récupération de l'utilisateur authentifié
+        $user = $this->security->getUser()->getUserIdentifier();
 
-        $question = $questionRepository->findAll(); // Récupération des données de la base
+        //Récupération de la valeur de la requête
+        $searchTerm = $request->query->get('search'); 
 
-        $searchTerm = $request->query->get('search'); // Récupération de la valeur de la requête
-        $data = []; // Donnée à afficher
+        
+        // Récupération des questions filtré par la recherche et le departement de l'utilisateur authentifié
+        $question = $questionRepository->getQuestionsFromSearchAndUser($searchTerm, $user);
 
-        foreach ($question as $item) {
-
-            // Si le terme de recherche est vide OU si la question/réponse contient le terme de recherche
-            // on ajoute l'objet à la liste à afficher
-            if (empty($searchTerm) || stripos($item->getLabel(), $searchTerm) !== false || stripos($item->getReponse(), $searchTerm) !== false) {
-
-                $categorie = $item->getCategorie();
-                $departement = $categorie->getDepartement();
+        // Donnée à envoyer
+        $data = [];
+        
+        // Mise en forme des données à envoyer
+        foreach($question as $item) {
 
                 $data[] = [
                     'id' => $item->getId(),
-                    'categorie' => $item->getCategorie(),
-                    'departement' => $departement->getLabel(),
-                    'label' => $item->getLabel(),
+                    'categorie' => $item->getCategorie()->getLabel(),
+                    'departement' => $item->getCategorie()->getDepartement()->getLabel(),
+                    'question' => $item->getLabel(),
                     'reponse' => $item->getReponse(),
-                ];
-            }
+                    'label' => $item->getLabel(),
+                ];           
+            
         }
 
         return $this->render('question/index.html.twig', [
