@@ -21,6 +21,34 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
+    public function getUserQuestions($user) {
+
+        return $this->createQueryBuilder('q')
+
+            ->innerJoin('q.categorie', 'c')
+            ->innerJoin('c.departement', 'd')
+            ->innerJoin('d.users', 'u')
+            ->andWhere('u.email = :users')
+            ->setParameter('users', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getQuestionsFromSearch($searchTerm) {
+
+        return $this->createQueryBuilder('q')
+
+        ->select('q, c, d')
+        ->innerJoin('q.categorie', 'c')
+        ->innerJoin('c.departement', 'd')
+        ->where(':searchTerm = \'\' OR 
+              q.label LIKE :searchTerm OR 
+              q.reponse LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->getQuery()
+        ->getResult();
+    }
+
 //    /**
 //     * @return Question[] Returns an array of Question objects
 //     */
