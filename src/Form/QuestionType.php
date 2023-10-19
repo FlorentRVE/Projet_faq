@@ -5,12 +5,12 @@ namespace App\Form;
 use App\Entity\Question;
 use App\Entity\Categorie;
 use App\Entity\User;
+use App\Repository\CategorieRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class QuestionType extends AbstractType
@@ -34,22 +34,13 @@ class QuestionType extends AbstractType
                 'placeholder' => '== Choisissez une catégorie ==',
                 'required' => true,
                 'label' => 'Category',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (CategorieRepository $cr) {
 
-                        // $user = $this->security->getUser();
-                        $user = ['admin'];
-                        // $departement []= $user->getDepartement();
-                        $departement = ['Velo', 'Vert', 'CityKer'];
+                    $user = $this->security->getUser()->getUserIdentifier();
+                    // dd($user);
 
-                        return $er->createQueryBuilder('c')
-                            ->innerJoin('c.departement', 'd')
-                            ->andWhere('d.label IN (:departement)')
-                            ->setParameter('departement', $departement);
-
-                        // return $er->createQueryBuilder('c')
-                        // ->innerJoin('c.departement', 'd')
-                        // ->andWhere('d.users = :users')
-                        // ->setParameter('users', $user);
+                    return $cr->getCategoriesViaUserDepartement($user);
+                    
                 },
                 'group_by' => function (?Categorie $categorie) {
                     return $categorie ? $categorie->getDepartement()->getLabel() : '';

@@ -21,6 +21,16 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    public function getCategoriesViaUserDepartement($user)
+    {
+        return $this->createQueryBuilder('c')
+
+            ->innerJoin('c.departement', 'd')
+            ->innerJoin('d.users', 'u')
+            ->andWhere('u.email = :users')
+            ->setParameter('users', $user);
+    }
+
 //    /**
 //     * @return Categorie[] Returns an array of Categorie objects
 //     */

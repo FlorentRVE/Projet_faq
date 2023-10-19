@@ -73,7 +73,7 @@
                             {% for dataItem in data %}
                                 {% if dataItem.categorie == category %}
                                     <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
-                                        <h3 class=" text-blue-700 underline">{{ dataItem.question }}</h3>
+                                        <h3 class=" text-slate-900 hover:underline">{{ dataItem.question }}</h3>
                                         <div class="answer">{{ dataItem.reponse | raw }}</div>
                                     </div>
                                 {% endif %}
