@@ -12,14 +12,16 @@
         
             <div class="flex">
                 <h1 class="text-center text-3xl uppercase text-slate-100 font-bold flex-auto ml-24">FAQ numéro client</h1>
-
-                <a href="{{ path('app_login') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
-                    <i class="fa-solid fa-user text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
-                </a>
-
-                <a href="{{ path('app_question_index') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
-                    <i class="fa-solid fa-user text-green-500 text-2xl text-center px-4 py-1 font-semibold"></i>
-                </a>
+                
+                {# {% if is_granted('ROLE_USER') %} #}
+                    <a href="{{ path('app_question_index') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
+                        <i class="fa-solid fa-gears text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
+                    </a>
+                {# {% else %} #}
+                    <a href="{{ path('app_login') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
+                        <i class="fa-solid fa-user text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
+                    </a>
+                {# {% endif %} #}
             </div>
 
             {# ========== Barre de recherche =========#}
@@ -31,7 +33,7 @@
 
         </header>
 
-        <content class="flex flex-col gap-10 mt-10 mb-10">
+        <content class="flex flex-col gap-10 my-10">
 
             {# ==================== Boutons de tri par département ==============#}
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
@@ -39,56 +41,46 @@
 
                 <p class="reset bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
-                {# === Récupère les départements et les stocke dans un tableau === #}
-                {% set departements = [] %}
-                {% for dataItem in data %}
-                    {% set departement = dataItem.departement %}
-                    {% if departement not in departements %}
-                        {% set departements = departements|merge([departement]) %}
-                    {% endif %}
-                {% endfor %}
-
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
-                {% for departement in departements %}
+                {% for departement in data %}
                     <p data-departement="{{ departement }}" class="category bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
-                {% endfor %}
+                {% endfor %} 
             </div>
 
-            {# ========== Affichage des questions regroupées par catégorie =========#}
-            <div class="flex flex-wrap gap-10 justify-center">
+            {# ========== Affichage des questions regroupées par departement puis catégorie =========#}
+            <div class="flex flex-wrap gap-10 w-[95%] mx-auto">
 
-                {# === Récupère les catégories et les stocke dans un tableau === #}
                 {% if data is not empty %}
-                    {% set categories = [] %}
-                    {% for dataItem in data %}
-                        {# Ici on doit convertir category en string pour que la valeur soit strictement unique dans le tableau #}
-                        {# sinon on aurait par exemple eu un conteneur "horaire" pour chaque département #}
-                        {% set category = dataItem.categorie ~ '' %} 
-                        {% if category not in categories %}
-                            {% set categories = categories|merge([category]) %}
-                        {% endif %}
-                    {% endfor %}
 
-                    {# === Pour chaque catégorie on crée un container et on y affiche toutes les questions de cette catégorie === #}
-                    {% for category in categories %}
+                    {% for departement in data %}
 
-                        <div class="container flex flex-col shadow-lg rounded-xl w-5/12">
-                            <h3 class="bg-slate-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ category }}</h3>
-                            {% for dataItem in data %}
-                                {% if dataItem.categorie == category %}
-                                    <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ dataItem.departement }}">
-                                        <h3 class=" text-slate-900 hover:underline">{{ dataItem.question }}</h3>
-                                        <div class="answer">{{ dataItem.reponse | raw }}</div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                        <div class="container flex flex-col gap-10 mx-auto">
+
+                            <h2 class="uppercase p-2 font-semibold text-slate-800 rounded-xl text-2xl">{{ departement }}</h2>
+
+                                <div class="flex flex-row flex-wrap gap-10 justify-between">
+
+                                    {% for categorie in departement.categories %} 
+
+                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%]">
+                                            <h3 class="bg-slate-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ categorie }}</h3>
+
+                                                {% for question in categorie.questions %}
+                                                    <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ departement }}">
+                                                        <h3 class=" text-slate-900 hover:underline">{{ question.label }}</h3>
+                                                        <div class="answer">{{ question.reponse | raw }}</div>
+                                                    </div>
+                                                {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
                         </div>
                     {% endfor %}
-
+                    
                 {% else %}
 
                     <div class="bg-yellow-100 ml-4 rounded-xl p-11">
-                        <p class="text-red-500 text-xl">Aucune question ne correspond à votre recherche...</p>
+                        <p class="text-red-500 text-3xl">Aucune question ne correspond à votre recherche...</p>
                     </div>
                 {% endif %}
             </div>

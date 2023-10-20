@@ -22,14 +22,31 @@ class DepartementRepository extends ServiceEntityRepository
         parent::__construct($registry, Departement::class);
     }
 
-    public function getUserDepartments(User $user)
+    // =========== Requête permettant de récupérer les departements de l'utilisateur via son identifiant  =============
+    // /!\ Ici on a volontairement omis getQuery et getResult pour ne pas créer une erreur dans QuestionType.php
+    // penser à les rajouter si utiliser dans un controller
+    public function getUserDepartments($user)
     {
         return $this->createQueryBuilder('d')
             ->innerJoin('d.users', 'u')
-            ->andWhere('d.users = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+            ->andWhere('u.email = :users')
+            ->setParameter('users', $user);
+    }
+
+    // =========== Requête permettant de récupérer les données de la base en fonction d'un terme de recherche =============
+    public function getQuestionsFromSearch($searchTerm) {
+
+        return $this->createQueryBuilder('d')
+
+        ->select('q, c, d')
+        ->innerJoin('d.categories', 'c')
+        ->innerJoin('c.questions', 'q')
+        ->where(':searchTerm = \'\' OR 
+                q.label LIKE :searchTerm OR 
+                q.reponse LIKE :searchTerm')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->getQuery()
+        ->getResult();
     }
 
     //    /**

@@ -21,8 +21,8 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    // Requête permettant de récupérer les données de la base en fonction d'un terme de recherche et des départements auxquels
-    // appartient l'utilisateur authentifié
+    // ========== Requête permettant de récupérer les données de la base en fonction d'un terme de recherche et des départements auxquels
+    // appartient l'utilisateur authentifié =======
     public function getQuestionsFromSearchAndUser($searchTerm, $user) {
 
         return $this->createQueryBuilder('q') // jusqu'à les questions 
@@ -37,22 +37,6 @@ class QuestionRepository extends ServiceEntityRepository
             q.reponse LIKE :searchTerm') // ... ensuite selon le terme de recherche
         ->setParameter('users', $user) // ici on a besoin de l'utilisateur authentifie (user) et de la valeur de la requête (searchTerm) ...
         ->setParameter('searchTerm', '%'.$searchTerm.'%') // On commence par déclarer les variables dynamiques qui seront utilisées dans notre requête ...
-        ->getQuery()
-        ->getResult();
-    }
-
-    // Requête permettant de récupérer les données de la base en fonction d'un terme de recherche
-    public function getQuestionsFromSearch($searchTerm) {
-
-        return $this->createQueryBuilder('q')
-
-        ->select('q, c, d')
-        ->innerJoin('q.categorie', 'c')
-        ->innerJoin('c.departement', 'd')
-        ->where(':searchTerm = \'\' OR 
-              q.label LIKE :searchTerm OR 
-              q.reponse LIKE :searchTerm')
-        ->setParameter('searchTerm', '%'.$searchTerm.'%')
         ->getQuery()
         ->getResult();
     }

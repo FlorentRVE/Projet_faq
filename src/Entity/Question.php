@@ -24,6 +24,11 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    public function __toString(): string
+    {
+        return $this->label;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

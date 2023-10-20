@@ -28,16 +28,19 @@
         <sidebar class="bg-slate-800 fixed left-0 top-0 h-screen">
             {# =========== Sidebar ============= #}
             <div class="flex flex-col items-center w-48">
+
                 <a href="{{ path('app_faq') }}">
+
                     <img src="{{ asset('images/SODIPARC_logo_blanc_SIGN.png') }}" alt="Logo" class="p-4">
                 <a>
+
                 <div class="flex flex-col items-center gap-3 mt-10 border-t border-slate-600 pt-4">
+
                     <a href="{{ path('app_categorie_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full">Gestion catégorie</a>
-                    <a href="{{ path('app_departement_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion département</a>
-                    
                     {# ===== Affichage de la gestion des utilisateurs seulement si ROLE_ADMIN ===== #}
                     {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('app_user_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion utilisateur</a>
+                        <a href="{{ path('app_departement_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion département</a>
+                        <a href="{{ path('app_user_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion utilisateur</a>
                     {% endif %}
                 </div>
             </div>
