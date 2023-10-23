@@ -44,11 +44,11 @@
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
             <div class="flex justify-evenly p-3 rounded-2xl uppercase mx-auto mt-10 w-2/5">
 
-                <p class="reset bg-sky-800 dark:bg-slate-700 dark:text-slate-200 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+                <p class="reset bg-sky-800 dark:bg-slate-800 dark:text-slate-200 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in data %}
-                    <p data-departement="{{ departement }}" class="category bg-sky-800 dark:bg-slate-700 dark:text-slate-200 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-sky-800 dark:bg-slate-800 dark:text-slate-200 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
                 {% endfor %} 
             </div>
 
@@ -59,7 +59,7 @@
 
                     {% for departement in data %}
 
-                        <div class="container p-4 flex flex-col gap-10 mx-auto shadow-lg rounded-xl bg-slate-100 dark:bg-slate-800">
+                        <div class="container p-4 flex flex-col gap-10 mx-auto shadow-lg rounded-xl bg-slate-100 dark:bg-slate-900">
 
                             <div class="flex">
                                 <div class="h-auto w-3 bg-green-500 mr-2 dark:bg-green-800"></div>
@@ -76,7 +76,7 @@
                                                 {% for question in categorie.questions %}
                                                     <div class="toggleBtn objet mb-1 cursor-pointer bg-slate-200 border border-solid border-slate-500 dark:bg-slate-900" data-departement="{{ departement }}">
                                                         <h3 class=" text-slate-900 hover:bg-sky-600 hover:text-slate-50 p-2 dark:text-slate-300 dark:hover:bg-sky-900">{{ question.label }}</h3>
-                                                        <div class="answer bg-slate-50 dark:bg-slate-800 dark:text-slate-300">{{ question.reponse | raw }}</div>
+                                                        <div class="answer bg-slate-50 dark:bg-zinc-950 dark:text-slate-300">{{ question.reponse | raw }}</div>
                                                     </div>
                                                 {% endfor %}
                                         </div>
