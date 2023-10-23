@@ -65,13 +65,13 @@
 
                                     {% for categorie in departement.categories %} 
 
-                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%] hover:scale-105 transition-all {{ departement.label is same as 'CityKer' ? 'bg-orange-200' : departement.label is same as 'Velo' ? 'bg-yellow-200' : 'bg-green-200'}}">
-                                            <h3 class="bg-sky-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ categorie }}</h3>
+                                        <div class="container flex flex-col w-[47%] hover:scale-105 transition-all">
+                                            <h3 class="bg-sky-800 p-2 font-semibold text-slate-100 mb-1">{{ categorie }}</h3>
 
                                                 {% for question in categorie.questions %}
-                                                    <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ departement }}">
-                                                        <h3 class=" text-slate-900 hover:underline">{{ question.label }}</h3>
-                                                        <div class="answer rounded-lg bg-slate-50">{{ question.reponse | raw }}</div>
+                                                    <div class="toggleBtn objet mb-1 cursor-pointer bg-slate-200 border border-solid border-slate-500" data-departement="{{ departement }}">
+                                                        <h3 class=" text-slate-900 hover:bg-sky-600 hover:text-slate-50 p-2">{{ question.label }}</h3>
+                                                        <div class="answer bg-slate-50">{{ question.reponse | raw }}</div>
                                                     </div>
                                                 {% endfor %}
                                         </div>
