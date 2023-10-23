@@ -9,9 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let questions = document.querySelectorAll('.objet'); // Récupère toutes les blocs questions/réponses
     let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
     let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de sous-catégories
-
+    
     let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les catégories
 
+    let toggleDark = document.querySelector('.toggleDark'); // Dark mode toggle bouton
+    let containerDark = document.documentElement; // Récupération de la balise <html> pour y toggle la classe 'dark'
+    
 
 
 
@@ -67,6 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.reload();
     });
 
+    //========================= Gestion du dark mode =======================
+
+    toggleDark.addEventListener('click', () => {
+
+        containerDark.classList.toggle('dark'); // Ajoute ou retire la class dark à la balise <html>
+    });
+
     //========================= Gestion du collapse =======================
 
     toggleBtn.forEach(btn => {
@@ -76,8 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.target.nextElementSibling.classList.toggle('show'); // Ajoute ou retire la class show au conteneur de la réponse
 
         });
-    })
-
+    });
 
 });
 
