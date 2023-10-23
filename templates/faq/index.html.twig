@@ -8,7 +8,7 @@
 
         {# ========== Page principale FAQ =========#}
 
-        <header class="bg-slate-800 p-2">
+        <header class="bg-sky-800 p-2">
         
             <div class="flex">
                 <h1 class="text-center text-3xl uppercase text-slate-100 font-bold flex-auto ml-24">FAQ numéro client</h1>
@@ -39,11 +39,11 @@
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
             <div class="flex justify-evenly p-3 rounded-2xl uppercase mx-auto w-2/5">
 
-                <p class="reset bg-slate-800 hover:bg-blue-900 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+                <p class="reset bg-sky-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in data %}
-                    <p data-departement="{{ departement }}" class="category bg-slate-800 hover:bg-blue-900 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-sky-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
                 {% endfor %} 
             </div>
 
@@ -54,21 +54,24 @@
 
                     {% for departement in data %}
 
-                        <div class="container flex flex-col gap-10 mx-auto">
+                        <div class="container p-4 flex flex-col gap-10 mx-auto shadow-lg rounded-xl bg-slate-100">
 
-                            <h2 class="uppercase p-2 font-semibold text-slate-800 rounded-xl text-2xl">{{ departement }}</h2>
+                            <div class="flex">
+                                <div class="h-auto w-3 bg-green-500 mr-2"></div>
+                                <h2 class="uppercase p-2 font-semibold text-sky-900 rounded-xl text-2xl">{{ departement }}</h2>
+                            </div>
 
                                 <div class="flex flex-row flex-wrap gap-10 justify-between">
 
                                     {% for categorie in departement.categories %} 
 
-                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%] hover:scale-105 transition-all">
-                                            <h3 class="bg-slate-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ categorie }}</h3>
+                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%] hover:scale-105 transition-all {{ departement.label is same as 'CityKer' ? 'bg-orange-200' : departement.label is same as 'Velo' ? 'bg-yellow-200' : 'bg-green-200'}}">
+                                            <h3 class="bg-sky-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ categorie }}</h3>
 
                                                 {% for question in categorie.questions %}
                                                     <div class="toggleBtn objet m-3 cursor-pointer" data-departement="{{ departement }}">
                                                         <h3 class=" text-slate-900 hover:underline">{{ question.label }}</h3>
-                                                        <div class="answer">{{ question.reponse | raw }}</div>
+                                                        <div class="answer rounded-lg bg-slate-50">{{ question.reponse | raw }}</div>
                                                     </div>
                                                 {% endfor %}
                                         </div>
