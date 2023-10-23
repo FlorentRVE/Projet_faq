@@ -32,7 +32,7 @@ class QuestionController extends AbstractController
     // ============== Panneau d'administration avec affichage de toutes les questions =============================
 
     #[Route('/', name: 'app_question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository, Request $request): Response
+    public function index(DepartementRepository $departementRepository, Request $request): Response
     {
 
         //Récupération de l'utilisateur authentifié
@@ -40,30 +40,13 @@ class QuestionController extends AbstractController
 
         //Récupération de la valeur de la requête
         $searchTerm = $request->query->get('search'); 
-
         
         // Récupération des questions filtré par la recherche et le departement de l'utilisateur authentifié
-        $question = $questionRepository->getQuestionsFromSearchAndUser($searchTerm, $user);
-
-        // Donnée à envoyer
-        $data = [];
-        
-        // Mise en forme des données à envoyer
-        foreach($question as $item) {
-
-                $data[] = [
-                    'id' => $item->getId(),
-                    'categorie' => $item->getCategorie()->getLabel(),
-                    'departement' => $item->getCategorie()->getDepartement()->getLabel(),
-                    'question' => $item->getLabel(),
-                    'reponse' => $item->getReponse(),
-                    'label' => $item->getLabel(),
-                ];           
-            
-        }
+        $data = $departementRepository->getQuestionsFromSearchAndUser($searchTerm, $user);
+        // dd($data);
 
         return $this->render('question/index.html.twig', [
-            'questions' => $data,
+            'data' => $data,
             'searchTerm' => $searchTerm,
         ]);
     }

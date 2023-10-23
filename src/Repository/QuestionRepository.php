@@ -21,26 +21,6 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    // ========== Requête permettant de récupérer les données de la base en fonction d'un terme de recherche et des départements auxquels
-    // appartient l'utilisateur authentifié =======
-    public function getQuestionsFromSearchAndUser($searchTerm, $user) {
-
-        return $this->createQueryBuilder('q') // jusqu'à les questions 
-
-        ->select('q, c, d')
-        ->innerJoin('q.categorie', 'c') // ... en passant par les catégories
-        ->innerJoin('c.departement', 'd')
-        ->innerJoin('d.users', 'u') // ... on remonte depuis le departement
-        ->andWhere('u.email = :users') // ... et l'identité de l'utilisateur authentifié
-        ->andwhere(':searchTerm = \'\' OR 
-            q.label LIKE :searchTerm OR 
-            q.reponse LIKE :searchTerm') // ... ensuite selon le terme de recherche
-        ->setParameter('users', $user) // ici on a besoin de l'utilisateur authentifie (user) et de la valeur de la requête (searchTerm) ...
-        ->setParameter('searchTerm', '%'.$searchTerm.'%') // On commence par déclarer les variables dynamiques qui seront utilisées dans notre requête ...
-        ->getQuery()
-        ->getResult();
-    }
-
 //    /**
 //     * @return Question[] Returns an array of Question objects
 //     */

@@ -39,11 +39,11 @@
             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
             <div class="flex justify-evenly p-3 rounded-2xl uppercase mx-auto w-2/5">
 
-                <p class="reset bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
+                <p class="reset bg-slate-800 hover:bg-blue-900 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">Tous</p>
 
                 {# === Pour chaque département dans le tableau on crée un bouton de tri correspondant === #}
                 {% for departement in data %}
-                    <p data-departement="{{ departement }}" class="category bg-blue-800 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
+                    <p data-departement="{{ departement }}" class="category bg-slate-800 hover:bg-blue-900 text-slate-50 rounded-2xl text-center py-2 hover:brightness-125 shadow-lg font-bold cursor-pointer w-1/5">{{ departement }}</p>
                 {% endfor %} 
             </div>
 
@@ -62,7 +62,7 @@
 
                                     {% for categorie in departement.categories %} 
 
-                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%]">
+                                        <div class="container flex flex-col shadow-lg rounded-xl w-[47%] hover:scale-105 transition-all">
                                             <h3 class="bg-slate-800 p-2 rounded-t-xl font-semibold text-slate-100">{{ categorie }}</h3>
 
                                                 {% for question in categorie.questions %}
