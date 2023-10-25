@@ -21,19 +21,21 @@
                 
                 {% if is_granted('ROLE_USER') %}
                     <a href="{{ path('app_question_index') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
+                        <p class="font-semibold text-slate-100">Panneau d'administration</p>
                         <i class="fa-solid fa-gears text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
                     </a>
                 {% else %}
                     <a href="{{ path('app_login') }}"  class="flex flex-col p-4 text-center transition-all hover:scale-105">
+                        <p class="font-semibold text-slate-100">Connexion</p>
                         <i class="fa-solid fa-user text-slate-50 text-2xl text-center px-4 py-1 font-semibold"></i>
                     </a>
                 {% endif %}
             </div>
 
             {# ======================= Barre de recherche ======================#}
-            <form action="#" method="get" class="p-4 shadow-lg text-lg text-center  font-semibold">
-                <label for="search" class="text-slate-100">Rechercher une question </label>
-                <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg">
+            <form action="#" method="get" class="p-4 shadow-lg text-lg text-center">
+                <label for="search" class="text-slate-100 font-semibold">Rechercher </label>
+                <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg" placeholder="Rechercher dans les questions ou réponses ...">
                 <button type="submit" class="text-center px-4 py-1 hover:brightness-125 text-slate-50 text-2xl transition-all hover:scale-110"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 

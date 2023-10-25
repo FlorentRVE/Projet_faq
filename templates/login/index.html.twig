@@ -8,13 +8,13 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Login</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Connexion</h1>
 
     <div class="flex flex-col w-2/4 mx-auto">
         <form action="{{ path('app_login') }}" method="post" class="bg-slate-800 p-7 my-6 rounded-xl shadow-xl flex flex-col">
 
             <div class="mb-8 flex flex-col">
-                <label for="username" class="text-slate-100 uppercase font-semibold mb-2">Email:</label>
+                <label for="username" class="text-slate-100 uppercase font-semibold mb-2">Identifiant:</label>
                 <input type="text" id="username" name="_username" value="{{ last_username }}" class="p-2 rounded-lg">
             </div>
 
@@ -27,7 +27,7 @@
             <input type="hidden" name="_target_path" value="/question">
 
             <div class="self-end">
-                <button type="submit" class="btn bg-green-500 rounded-2xl text-center hover:brightness-125 shadow-lg font-bold px-7 py-3 text-lg">Login</button>
+                <button type="submit" class="btn bg-green-500 rounded-2xl text-center hover:brightness-125 shadow-lg font-bold px-7 py-3 text-lg">Se connecter</button>
             </div>
         </form>
 
