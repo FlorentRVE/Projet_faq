@@ -23,9 +23,9 @@ class QuestionController extends AbstractController
         $this->security = $security;
     }
 
-    // ======================== Controller de la partie administrateur de la FAQ =========================
+    // ======================== Controller de la partie administration de la FAQ =========================
 
-    // CRUD généré automatiquement à partir de l'entité Demande par "make:crud Question"
+    // CRUD généré automatiquement à partir de l'entité Question par "make:crud Question"
     // Les templates TWIG correspondants on été generés automatiquement et personnalisé par la suite 
 
 

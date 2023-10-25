@@ -53,18 +53,18 @@ class DepartementRepository extends ServiceEntityRepository
     // appartient l'utilisateur authentifié =======
     public function getQuestionsFromSearchAndUser($searchTerm, $user) {
 
-        return $this->createQueryBuilder('d') // jusqu'à les questions 
+        return $this->createQueryBuilder('d') 
 
         ->select('q, c, d')
-        ->innerJoin('d.categories', 'c') // ... en passant par les catégories
+        ->innerJoin('d.categories', 'c') 
         ->innerJoin('c.questions', 'q')
-        ->innerJoin('d.users', 'u') // ... on remonte depuis le departement
-        ->andWhere('u.email = :users') // ... et l'identité de l'utilisateur authentifié
+        ->innerJoin('d.users', 'u') 
+        ->andWhere('u.email = :users') 
         ->andwhere(':searchTerm = \'\' OR 
             q.label LIKE :searchTerm OR 
-            q.reponse LIKE :searchTerm') // ... ensuite selon le terme de recherche
-        ->setParameter('users', $user) // ici on a besoin de l'utilisateur authentifie (user) et de la valeur de la requête (searchTerm) ...
-        ->setParameter('searchTerm', '%'.$searchTerm.'%') // On commence par déclarer les variables dynamiques qui seront utilisées dans notre requête ...
+            q.reponse LIKE :searchTerm') 
+        ->setParameter('users', $user) 
+        ->setParameter('searchTerm', '%'.$searchTerm.'%') 
         ->getQuery()
         ->getResult();
     }

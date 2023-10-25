@@ -37,7 +37,6 @@ class QuestionType extends AbstractType
                 'query_builder' => function (CategorieRepository $cr) {
 
                     $user = $this->security->getUser()->getUserIdentifier();
-                    // dd($user);
 
                     return $cr->getCategoriesViaUserDepartement($user);
                     

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
     let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de catégories
     
-    let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les départements
+    let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset la page
 
     let toggleDark = document.querySelector('.toggleDark'); // Dark mode toggle bouton
     let containerDark = document.documentElement; // Récupération de la balise <html> pour y toggle la classe 'dark'
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================================== Fonctions ====================================
 
-    // =================== Fonctions permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible =====================
+    // =================== Fonctions permettant d'afficher les départements seulement s'il y a au moins un objet de visible =====================
     function toggleContainer(container) {
         let childObjects = container.querySelectorAll('.objet'); // Récupère tous les blocs questions/réponses avec la classe objet et correspondant à la sous-catégorie
         let allHidden = true; // Variable 'Tout caché'
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
 
 
-            // // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
+            // // Appel de la fonction permettant d'afficher les départements seulement s'il y a au moins un objet de visible pour chaque département
             containers.forEach(container => {
                 toggleContainer(container);
             });
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
 
 
-            // // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
+            // // Appel de la fonction permettant d'afficher les catégories seulement s'il y a au moins un objet de visible pour chaque catégorie
             containers.forEach(container => {
                 toggleContainer(container);
             });

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FaqController extends AbstractController
 {
 
-    // =============== Controller de la partie utilisateur-only de la FAQ =========================
+    // =============== Controller de la page principale de la FAQ =========================
 
     // Seulement affichage et recherche des questions/réponses depuis la BDD
 
