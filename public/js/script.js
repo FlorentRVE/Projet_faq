@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset la page
 
+    let topBtn = document.querySelector('.topBtn'); // Sticky header
+
     let toggleDark = document.querySelector('.toggleDark'); // Dark mode toggle bouton
     let containerDark = document.documentElement; // Récupération de la balise <html> pour y toggle la classe 'dark'
+
     
 
 
@@ -35,6 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
       
         container.style.display = allHidden ? 'none' : ''; // si la variable 'Tout caché' est True, on masque le conteneur, sinon on l'affiche
       }
+
+    // =================== Fonctions permettant de remonter en haut de la page =====================
+      function goToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 
     
     
@@ -116,5 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     });
+
+    //========================= Gestion de la scroll =======================
+
+    topBtn.addEventListener('click', () => {
+
+        goToTop();
+
+    })
 
 });
