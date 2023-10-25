@@ -4,9 +4,7 @@
 {# ... #}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+
 
     <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Connexion</h1>
 
@@ -35,4 +33,11 @@
             <a href="{{ path('app_faq') }}"  class="bg-sky-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
         </div>
     </div>
+
+    {% if error %}
+        <div class="text-center">
+            <p class="text-xl">{{ errorMsg }}</p>
+            <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        </div>
+    {% endif %}
 {% endblock %}
