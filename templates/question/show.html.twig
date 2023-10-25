@@ -3,12 +3,12 @@
 {% block title %}Question{% endblock %}
 
 {% block body %}
-    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-blue-900 py-5 shadow-xl">Demande</h1>
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-sky-900 py-5 shadow-xl">Demande</h1>
 
     {# ====== Affichage de la demande ========= #}
     <table class="table mx-auto shadow-xl text-lg w-11/12 my-6">
         <tbody>
-            <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+            <tr class="bg-sky-900 text-slate-100 border-2 border-slate-900 uppercase">
                 <th>Id</th>
                 <th>Question</th>
                 <th>Reponse</th>
@@ -18,7 +18,7 @@
                 <td class="p-4 bg-yellow-100 text-slate-800 text-center uppercase font-extrabold border-2 border-slate-900 w-16">{{ question.id }}</td>
                 {# <td class="p-4 text-slate-800 text-center uppercase font-extrabold border-2 border-slate-900 w-28 {{ demande.Categorie is same as 'city_ker' ? 'bg-orange-400' : demande.Categorie is same as 'velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ demande.Categorie }}</td> #}
                 {# <td class="p-4 bg-emerald-500 text-slate-800 text-center uppercase font-extrabold w-28">{{ demande.SousCategorie }}</td> #}
-                <td class="p-4 bg-blue-900 text-slate-100 font-semibold">{{ question.label }}</td>
+                <td class="p-4 bg-sky-900 text-slate-100 font-semibold">{{ question.label }}</td>
                 <td class="bg-green-100 p-3">{{ question.reponse | raw }}</td>
             </tr>
         </tbody>

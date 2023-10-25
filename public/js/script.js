@@ -3,14 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================================ Variables ============================
     
+    let department_choice;
     let category_choice;
     
-    let buttons = document.querySelectorAll('.category'); // Récupère tous les boutons de sélection de catégorie
+    let buttonDepartment = document.querySelectorAll('.departement'); // Récupère tous les boutons de sélection de département
+    let buttonCategory = document.querySelectorAll('.category'); // Récupère tous les boutons de sélection de catégorie
     let questions = document.querySelectorAll('.objet'); // Récupère toutes les blocs questions/réponses
     let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
-    let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de sous-catégories
+    let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de catégories
     
-    let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les catégories
+    let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset les départements
 
     let toggleDark = document.querySelector('.toggleDark'); // Dark mode toggle bouton
     let containerDark = document.documentElement; // Récupération de la balise <html> pour y toggle la classe 'dark'
@@ -37,16 +39,43 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     
-      // ========================== Evènement sélection catégorie ==============================
+      // ========================== Evènement sélection Département ==============================
 
-    buttons.forEach(button => {
+    buttonDepartment.forEach(button => {
         button.addEventListener('click', (e) => { // Pour chaque bouton (City ker, vert, velo), au click ...
 
-            category_choice = e.target.dataset.departement; // ... on récupère l'attribut data-categorie du bouton et on le stocke dans category_choice
+            department_choice = e.target.dataset.departement; // ... on récupère l'attribut data-departement du bouton et on le stocke dans department_choice
 
             questions.forEach(item => { // ensuite pour chaque bloc question/réponse ...                
                 
-                if(item.dataset.departement !== category_choice) { // ... on vérifie si l'attribut data-categorie du bloc est different de category_choice
+                if(item.dataset.departement !== department_choice) { // ... on vérifie si l'attribut data-departement du bloc est different de department_choice
+                    item.style.display = 'none'; // si c'est le cas, on le masque
+                } else {
+                    item.style.display = ''; // sinon on le montre
+                }
+                
+            })
+
+
+            // // Appel de la fonction permettant d'afficher les sous-catégories seulement s'il y a au moins un objet de visible pour chaque sous-catégorie
+            containers.forEach(container => {
+                toggleContainer(container);
+            });
+
+                        
+        });
+    });
+
+        // ========================== Evènement sélection Categorie ==============================
+
+        buttonCategory.forEach(button => {
+        button.addEventListener('click', (e) => { // Pour chaque bouton, au click ...
+
+            category_choice = e.target.dataset.categorie; // ... on récupère l'attribut data-categorie du bouton et on le stocke dans category_choice
+
+            questions.forEach(item => { // ensuite pour chaque bloc question/réponse ...                
+                
+                if(item.dataset.categorie !== category_choice) { // ... on vérifie si l'attribut data-categorie du bloc est different de category_choice
                     item.style.display = 'none'; // si c'est le cas, on le masque
                 } else {
                     item.style.display = ''; // sinon on le montre

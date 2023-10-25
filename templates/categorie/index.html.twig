@@ -12,18 +12,18 @@
 
         <table class="table shadow-xl text-lg">
             <thead>
-                <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+                <tr class="bg-sky-900 text-slate-100 border-2 border-slate-900 uppercase">
                     <th>Departement</th>
                     <th>Categorie</th>
                     <th>actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-blue-900">
+            <tbody class="bg-sky-900">
             {% for categorie in categories %}
                 <tr class="border-2 border-slate-900 objet text-center">
                     <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ categorie.departement is same as 'CityKer' ? 'bg-orange-400' : categorie.departement is same as 'Velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ categorie.departement }}</td>
                     <td class="bg-slate-50 pl-1 border-2 border-slate-900">{{ categorie.label }}</td>
-                    <td class="bg-blue-900 p-2 text-center">
+                    <td class="bg-sky-900 p-2 text-center">
                         <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="bg-yellow-400 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Modifier</a>
                     </td>
                 </tr>
@@ -37,7 +37,7 @@
         </table>
 
         <div class="">
-            <a href="{{ path('app_question_index') }}" class="bg-blue-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+            <a href="{{ path('app_question_index') }}" class="bg-sky-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
 
         </div>
     </content>

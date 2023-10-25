@@ -11,14 +11,14 @@
         </div>
     <table class="table shadow-xl text-lg">
         <thead>
-            <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase">
+            <tr class="bg-sky-900 text-slate-100 border-2 border-slate-900 uppercase">
                 <th>Admin</th>
                 <th>Identifiant</th>
                 <th>Departement</th>
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody class="bg-blue-900">
+        <tbody class="bg-sky-900">
         {% for user in users %}
             <tr class="border-2 border-slate-900 objet text-center">
                 <td class="pl-1 border-2 border-slate-900 w-3 {{user.roles|join(', ') is same as 'ROLE_ADMIN, ROLE_USER' ? 'bg-green-600' : 'bg-slate-50'}}"></td>
@@ -44,7 +44,7 @@
     </table>
 
     <div class="">
-        <a href="{{ path('app_question_index') }}" class="bg-blue-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+        <a href="{{ path('app_question_index') }}" class="bg-sky-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
 
     </div>
     <content>

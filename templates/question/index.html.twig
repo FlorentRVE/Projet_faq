@@ -36,13 +36,29 @@
 
                 <div class="flex flex-col items-center gap-3 mt-10 border-t border-slate-600 pt-4">
 
-                    <a href="{{ path('app_categorie_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full">Gestion catégorie</a>
+                    <a href="{{ path('app_categorie_index') }}" class="text-slate-50 text-center hover:bg-sky-800 mb-5 px-4 py-1 rounded-lg w-full">Gestion catégorie</a>
                     {# ===== Affichage de la gestion des utilisateurs seulement si ROLE_ADMIN ===== #}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('app_departement_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion département</a>
-                        <a href="{{ path('app_user_index') }}" class="text-slate-50 text-center hover:bg-blue-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion utilisateur</a>
+                        <a href="{{ path('app_departement_index') }}" class="text-slate-50 text-center hover:bg-sky-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion département</a>
+                        <a href="{{ path('app_user_index') }}" class="text-slate-50 text-center hover:bg-sky-800 mb-5 px-4 py-1 rounded-lg w-full h-auto">Gestion utilisateur</a>
                     {% endif %}
                 </div>
+
+                {% if not is_granted('ROLE_ADMIN') %}
+                    {# ========== Boutons de tri par catégorie =========#}
+                    {# Récupère les catégories des questions pour créer les boutons de tri correspondant #}
+                    <div class="flex flex-col gap-5 justify-evenly p-3 rounded-2xl w-full">
+
+                        <p class="reset text-slate-50 text-center hover:bg-sky-800 mb-5 px-4 py-1 rounded-lg w-full h-auto cursor-pointer">Tous</p>
+                        
+                        {# === Pour chaque département dans le tableau qu'on vient de créer, on crée un bouton de tri correspondant === #}
+                        {% for departement in data %}
+                            {% for categorie in departement.categories %}
+                            <p data-categorie="{{ categorie }}" class="category text-slate-50 text-center hover:bg-sky-800 mb-5 px-4 py-1 rounded-lg w-full h-auto cursor-pointer">{{ categorie }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
@@ -56,7 +72,7 @@
                 <div class="flex items-end justify-between my-10 w-11/12 mx-auto">
 
                     <div class="flex flex-col gap-2">
-                        <h1 class="text-xl uppercase text-slate-900 font-bold text-center mt-4">Gestion des question</h1>
+                        <h1 class="text-xl uppercase text-sky-900 font-bold text-center mt-4">Gestion des question</h1>
 
                         {# ======== Affichage des boutons de tri seulement si ROLE_ADMIN ====== #}
                         {% if is_granted('ROLE_ADMIN') %}
@@ -65,11 +81,11 @@
                             {# Récupère les départements des questions pour créer les boutons de tri correspondant #}
                             <div class="flex justify-between gap-3 bg-slate-800 p-3 rounded-2xl shadow-lg uppercase">
 
-                                <p class="reset bg-blue-800 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
+                                <p class="reset bg-sky-800 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">Tous</p>
                                 
                                 {# === Pour chaque département dans le tableau qu'on vient de créer, on crée un bouton de tri correspondant === #}
                                 {% for departement in data %}
-                                    <p data-departement="{{ departement }}" class="category bg-blue-800 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">{{ departement }}</p>
+                                    <p data-departement="{{ departement }}" class="departement bg-sky-800 text-slate-50 rounded-2xl text-center py-2 px-4 hover:brightness-125 shadow-lg font-bold cursor-pointer">{{ departement }}</p>
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -88,7 +104,7 @@
 
                     <thead>
 
-                        <tr class="bg-blue-900 text-slate-100 border-2 border-slate-900 uppercase p-2">
+                        <tr class="bg-sky-900 text-slate-100 border-2 border-slate-900 uppercase p-2">
 
                             <th class="p-2 border-2 border-slate-900">Departement</th>
                             <th class="p-2 border-2 border-slate-900">Categorie</th>
@@ -107,18 +123,18 @@
 
                                 {% for question in categorie.questions %}
 
-                                    <tr class="border-2 border-slate-900 objet" data-departement={{ departement }}>
+                                    <tr class="border-2 border-slate-900 objet" data-departement="{{ departement }}" data-categorie="{{ categorie  }}">
 
                                         <td class="p-2 text-slate-800 text-center border-2 border-slate-900 uppercase font-extrabold w-28 {{ departement.label is same as 'CityKer' ? 'bg-orange-400' : departement.label is same as 'Velo' ? 'bg-yellow-400' : 'bg-green-400'}}">{{ departement }}</td>
                                         <td class="p-2 bg-slate-50 text-slate-900 text-center border-2 border-slate-900 uppercase font-extrabold w-28">{{ categorie }}</td>
                                         <td class="p-2 bg-slate-200 text-slate-900 border-2 border-slate-900 font-semibold w-1/2">{{ question.label }}</td>
                                         <td class="bg-slate-50 border-2 border-slate-900 p-2">{{ question.reponse | raw}}</td>
-                                        <td class="bg-blue-900 p-2 text-center">
-                                            {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-blue-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
-                                            <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-blue-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
+                                        <td class="bg-sky-900 p-2 text-center">
+                                            {# <a href="{{ path('app_question_show', {'id': question.id}) }}" class="bg-sky-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Voir</a> #}
+                                            <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="bg-sky-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
                                             <form method="post" action="{{ path('app_question_delete', {'id': question.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
                                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
-                                                <button class="btn text-red-700  text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
+                                                <button class="btn text-red-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
                                             </form>
                                         </td>
                                     </tr>
