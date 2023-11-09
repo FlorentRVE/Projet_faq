@@ -14,6 +14,12 @@ class FaqController extends AbstractController
 
     // =============== Controller de la page principale de la FAQ =========================
 
+    #[Route('/', name: 'app_home')]
+    public function home()
+    {
+        return $this -> redirectToRoute('app_faq', [], Response::HTTP_SEE_OTHER);
+    }
+
     // Seulement affichage et recherche des questions/réponses depuis la BDD
 
     #[Route('/faq', name: 'app_faq')]

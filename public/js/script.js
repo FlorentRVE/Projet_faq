@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let questions = document.querySelectorAll('.objet'); // Récupère toutes les blocs questions/réponses
     let toggleBtn = document.querySelectorAll('.toggleBtn'); // Collapse toggle bouton
     let containers = document.querySelectorAll('.container'); // Récupère tous les conteneurs de catégories
+    let topBtn = document.querySelectorAll('.topBtn'); // Sticky header
     
     let buttonReset = document.querySelector('.reset'); // Récupère le boutton pour reset la page
 
-    let topBtn = document.querySelector('.topBtn'); // Sticky header
 
     let toggleDark = document.querySelector('.toggleDark'); // Dark mode toggle bouton
     let containerDark = document.documentElement; // Récupération de la balise <html> pour y toggle la classe 'dark'
@@ -103,6 +103,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         
         });
     });
+
+    //========================= Gestion de la scroll =======================
+
+    topBtn.forEach(btn => {
+    
+        btn.addEventListener('click', () => {
+    
+            goToTop();
+            console.log('test');
+    
+        })
+    })
     
     // ============= Boutton reset pour recharger la page ================
 
@@ -128,12 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    //========================= Gestion de la scroll =======================
 
-    topBtn.addEventListener('click', () => {
-
-        goToTop();
-
-    })
 
 });
