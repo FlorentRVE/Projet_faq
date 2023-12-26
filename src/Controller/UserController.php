@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\MotDePasseType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,9 +24,7 @@ class UserController extends AbstractController
 
         foreach($users as $user){
             
-            // Ici on va parcourir la collection Departement à partir de User vu que la relation est ManyToMany
             $departements = $user->getDepartement();
-            // Le tableau qui va contenir les labels des departements
             $departementLabels = []; 
 
             foreach($departements as $departement){
@@ -75,13 +74,32 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit_password', name: 'app_userPassword_edit', methods: ['GET', 'POST'])]
+    public function editPassword(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $form = $this->createForm(MotDePasseType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -93,7 +111,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('user/motDePasse.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
