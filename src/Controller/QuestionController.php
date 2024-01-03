@@ -111,4 +111,17 @@ class QuestionController extends AbstractController
 
         return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    ///////////////////////////
+
+    #[Route('/{id}/count', name: 'app_question_count', methods: ['POST'])]
+    public function counter(QuestionRepository $questionRepository, EntityManagerInterface $entityManager, $id): Response
+    {
+        $question = $questionRepository->find($id);
+        $question->setCount($question->getCount() + 1);
+        $entityManager->flush();
+
+        return new Response('Counted!', 200);
+
+    }
 }

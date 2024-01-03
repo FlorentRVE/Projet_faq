@@ -24,6 +24,9 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $count = null;
+
     public function __toString(): string
     {
         return $this->label;
@@ -66,6 +69,18 @@ class Question
     public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getCount(): ?int
+    {
+        return $this->count;
+    }
+
+    public function setCount(?int $count): static
+    {
+        $this->count = $count;
 
         return $this;
     }
