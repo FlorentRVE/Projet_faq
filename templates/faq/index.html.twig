@@ -57,6 +57,12 @@
                         {% for departement in data %}
                             <p data-departement="{{ departement }}" class="departement text-sky-900 dark:text-sky-600 text-center py-2  font-bold cursor-pointer text-xl">{{ departement }}</p>
                         {% endfor %} 
+
+                        {% if is_granted('ROLE_USER') %}
+                            {# <a href="{{ path('app_saisi_new') }}" class="text-sky-900 dark:text-sky-600 text-center py-2 font-bold cursor-pointer text-xl mt-10">Saisir demande</a> #}
+                            <button class="btn btn-primary text-sky-900 dark:text-sky-600 text-center py-2 font-bold cursor-pointer text-xl mt-10" onclick="my_modal_1.showModal()">Saisir demande</button>
+                            <a href="{{ path('app_saisi_index') }}" class="text-sky-900 dark:text-sky-600 text-center py-2 font-bold cursor-pointer text-xl">Liste saisi</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -109,6 +115,62 @@
         <div>
             <button class="topBtn fixed bottom-[4%] right-[4%] bg-sky-800 dark:bg-sky-900 text-slate-100 px-3 py-2 rounded-full font-semibold">Haut de page</button>
         </div>
+
+        {# ======= MODAL FORM ========= #}
+        {% if is_granted('ROLE_USER') %}
+        <dialog id="my_modal_1" class="modal rounded-xl">
+            <div class="modal-box">
+                <div class="modal-action flex flex-col">
+                    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Nouvelle saisi</h1>
+
+                    <div class="bg-slate-800 p-4 mx-auto mb-6  shadow-xl w-full">
+                        {{ form_errors(form) }}
+
+                        {{ form_start(form) }}
+                            <div class="w-11/12 mx-auto flex flex-col">
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.nom, {'attr': {'class': 'p-2 rounded-lg'}}) }}
+                                </div>
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.prenom, {'attr': {'class': 'p-2 rounded-lg'}}) }}
+                                </div>
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.telephone, 'Téléphone', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.telephone, {'attr': {'class': 'rounded-lg font-semibold uppercase p-2'}}) }}
+                                </div>
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.commentaire, 'Commentaire', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.commentaire, {'attr': {'class': 'rounded-lg font-semibold uppercase p-2'}}) }}
+                                </div>
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.typeDemande, 'Type de demande', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.typeDemande, {'attr': {'class': 'rounded-lg font-semibold uppercase p-2'}}) }}
+                                </div>
+
+                                <div class="mb-8 flex flex-col">
+                                    {{ form_label(form.motif, 'Motif', {'label_attr': {'class': 'text-slate-100 uppercase font-semibold mb-2'}}) }}
+                                    {{ form_widget(form.motif, {'attr': {'class': 'rounded-lg font-semibold uppercase p-2'}}) }}
+                                </div>
+
+                                <button class="btn bg-green-500 rounded-2xl text-center hover:brightness-125 shadow-lg font-bold px-7 py-3 w-full text-lg">{{ button_label|default('Créer la saisi') }}</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="flex justify-between w-full mx-auto bg-slate-800">
+                        <a href="{{ path('app_faq') }}"  class="bg-sky-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg w-full font-semibold">Retour</a>
+                    </div>
+
+                </div>
+            </div>
+        </dialog>
+        {% endif %}
 
     </div>
 {% endblock %}

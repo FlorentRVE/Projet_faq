@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panneau d'administration FAQ{% endblock %}
+
+{% block body %}
+    <div class="bg-slate-100 min-h-screen">
+            {# ================================== | Page principale Panneau d'administration pour gérer les questions | =========================#}
+
+        <header>        
+            {# ==================== Barre de recherche ==================#}
+            <div class="ml-44 flex shadow-md w-11/12 mx-auto bg-slate-50">
+                <form action="#" method="get" class="p-4 text-center flex-auto ml-24">
+                    <input type="text" id="search" name="search" value="{{ searchTerm }}" class="w-1/2 text-slate-900 px-2 rounded-lg border border-slate-900" placeholder="Rechercher une saisi ...">
+                    <button type="submit" class="text-slate-800 text-center px-4 py-1 font-semibold text-2xl transition-all hover:scale-110"><i class="fa-solid fa-magnifying-glass"></i></button>
+                
+                </form>
+
+                {# ============= Bouton de déconnexion ================= #}
+                <a href="{{ path('app_logout') }}"  class="flex flex-col text-center transition-all hover:scale-105 p-6">
+                    <p class="font-semibold">Se déconnecter</p>
+                    <i class="fa-solid fa-right-to-bracket text-slate-800 text-2xl text-center font-semibold"></i>
+                </a>
+            </div>
+
+
+
+        </header>
+
+        {# ======================== Sidebar ========================== #}
+        <sidebar class="bg-slate-800 fixed left-0 top-0 h-screen">
+            <div class="flex flex-col items-center w-48">
+
+                {# ===== LOGO ====== #}
+                <a href="{{ path('app_faq') }}">
+
+                    <img src="{{ asset('images/SODIPARC_logo_blanc_SIGN.png') }}" alt="Logo" class="p-4 mt-2">
+                <a>
+
+                <div class="flex flex-col items-center gap-3 mt-10 border-t border-slate-600 pt-4">
+                
+                    <a href="{{ path('app_saisi_cityker') }}" class="text-slate-50 text-center hover:bg-orange-400 mb-5 px-4 py-1 rounded-lg w-full">CityKer</a>
+                    <a href="{{ path('app_saisi_vae') }}" class="text-slate-50 text-center hover:bg-green-400 mb-5 px-4 py-1 rounded-lg w-full">VAE</a>
+     
+                </div>
+
+            </div>
+
+
+        </sidebar>
+
+
+        <content>
+            <div class="ml-36 p-5">
+
+                {# =================== Bloc bouton tri et nouvelle question =================== #}
+                <div class="flex items-end justify-between my-10 w-11/12 mx-auto">
+
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-xl uppercase text-sky-900 font-bold text-center mt-4">Gestion des saisis</h1>
+                    </div>
+
+
+                    {# ========== Bouton renvoyant au formulaire de création de question =========#}
+                    <a href="{{ path('app_saisi_new') }}" class="bg-green-500 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-bold">Nouvelle saisi</a>
+                    
+                </div>
+
+
+
+                {# ========== Affichage des questions/réponses sous forme de tableau =========#}
+                    <table class="table mx-auto shadow-xl text-lg w-11/12">
+                        <thead>
+                            <tr class="bg-sky-900 text-slate-100 border-2 border-slate-900 uppercase p-2">
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'date'}) }}">Date</a>
+                                </th>
+                                <th>Heure</th>
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'collaborateur'}) }}">Collaborateur</a>
+                                </th>
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'service'}) }}">Service</a>
+                                </th>
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'nom'}) }}">Nom</a>
+                                </th>
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'prenom'}) }}">Prénom</a>
+                                </th>
+                                <th>Telephone</th> 
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'typeDemande'}) }}">Type de demande</a>
+                                </th>
+                                <th>
+                                    <a href="{{ path('app_saisi_index', {'search': app.request.query.get('search'), 'sort': app.request.query.get('sort') == 'ASC' ? 'DESC' : 'ASC', 'by': 'motif'}) }}">Motif</a>
+                                </th>
+                                <th>Commentaire</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for saisi in saisis %}
+                            <tr>
+                                <td>{{ saisi.date ? saisi.date|date('Y-m-d') : '' }}</td>
+                                <td>{{ saisi.heure ? saisi.heure|date('H:i:s') : '' }}</td>
+                                <td>{{ saisi.collaborateur.email }}</td>
+                                <td>{{ saisi.service|join(', ')}}</td>
+                                <td>{{ saisi.nom }}</td>
+                                <td>{{ saisi.prenom }}</td>
+                                <td>{{ saisi.telephone }}</td>
+                                <td>{{ saisi.typeDemande }}</td>
+                                <td>{{ saisi.motif }}</td>
+                                <td>{{ saisi.commentaire }}</td>
+                                <td class="bg-sky-900 p-2 text-center">
+                                    <a href="{{ path('app_saisi_edit', {'id': saisi.id}) }}" class="bg-sky-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold text-slate-50">Modifier</a>
+                                    <form method="post" action="{{ path('app_saisi_delete', {'id': saisi.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette question ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ saisi.id) }}">
+                                        <button class="btn text-red-700 text-center px-3  hover:brightness-125 rounded-lg font-semibold">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                     </table>
+            </div>
+        </content>
+
+        <div>
+            <button class="topBtn fixed bottom-[4%] right-[4%] bg-green-500 px-3 py-2 rounded-full font-semibold">Haut de page</button>
+        </div>
+    </div>
+
+{% endblock %}

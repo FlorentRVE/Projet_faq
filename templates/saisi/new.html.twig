@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel Saisi{% endblock %}
+
+{% block body %}
+    <h1 class="text-center text-3xl uppercase text-slate-100 font-bold bg-slate-800 py-5 shadow-xl">Créer une nouvelle saisi</h1>
+
+    {{ include('saisi/_form.html.twig') }}
+
+        <div class="flex justify-between w-4/5 mx-auto">
+        <a href="{{ path('app_faq') }}"  class="bg-sky-800 text-slate-50 rounded-2xl text-center px-5 py-3 hover:brightness-125 shadow-lg font-semibold">Retour à la liste</a>
+    </div>
+{% endblock %}

@@ -24,10 +24,14 @@ class Departement
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'departement')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Saisi::class, mappedBy: 'service')]
+    private Collection $saisis;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->saisis = new ArrayCollection();
     }
 
     public function __toString()
@@ -104,6 +108,33 @@ class Departement
     {
         if ($this->users->removeElement($user)) {
             $user->removeDepartement($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Saisi>
+     */
+    public function getSaisis(): Collection
+    {
+        return $this->saisis;
+    }
+
+    public function addSaisi(Saisi $saisi): static
+    {
+        if (!$this->saisis->contains($saisi)) {
+            $this->saisis->add($saisi);
+            $saisi->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaisi(Saisi $saisi): static
+    {
+        if ($this->saisis->removeElement($saisi)) {
+            $saisi->removeService($this);
         }
 
         return $this;

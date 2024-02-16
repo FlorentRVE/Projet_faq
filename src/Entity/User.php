@@ -34,9 +34,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Departement::class, inversedBy: 'users')]
     private Collection $departement;
 
+    #[ORM\OneToMany(mappedBy: 'collaborateur', targetEntity: Saisi::class)]
+    private Collection $saisis;
+
     public function __construct()
     {
         $this->departement = new ArrayCollection();
+        $this->saisis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +133,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeDepartement(Departement $departement): static
     {
         $this->departement->removeElement($departement);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Saisi>
+     */
+    public function getSaisis(): Collection
+    {
+        return $this->saisis;
+    }
+
+    public function addSaisi(Saisi $saisi): static
+    {
+        if (!$this->saisis->contains($saisi)) {
+            $this->saisis->add($saisi);
+            $saisi->setCollaborateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaisi(Saisi $saisi): static
+    {
+        if ($this->saisis->removeElement($saisi)) {
+            // set the owning side to null (unless already changed)
+            if ($saisi->getCollaborateur() === $this) {
+                $saisi->setCollaborateur(null);
+            }
+        }
 
         return $this;
     }
